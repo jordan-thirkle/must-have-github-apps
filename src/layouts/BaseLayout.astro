@@ -1,12 +1,15 @@
 ---
 import '../styles/global.css';
 import { siteDescription, siteName } from '@/lib/directory';
+import Icon from '@/components/Icon.astro';
+import ThemeToggle from '@/components/ThemeToggle.astro';
 
 interface Props {
   title?: string;
   description?: string;
   canonical?: string;
   type?: 'website' | 'article';
+  noindex?: boolean;
 }
 
 const {
@@ -14,6 +17,7 @@ const {
   description = siteDescription,
   canonical = Astro.url.href,
   type = 'website',
+  noindex = false,
 } = Astro.props;
 ---
 
@@ -23,8 +27,11 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:image" content={new URL('/og-default.svg', Astro.site || Astro.url).href} />
+    <meta name="twitter:image" content={new URL('/og-default.svg', Astro.site || Astro.url).href} />
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
@@ -34,28 +41,51 @@ const {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
+    <script is:inline>
+      document.documentElement.dataset.theme =
+        localStorage.getItem('theme') ||
+        (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    </script>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <div class="container header-inner">
-        <a class="wordmark" href="/">Must-Have GitHub Apps</a>
+        <a class="wordmark" href="/" aria-label="Must-Have GitHub Apps home"
+          ><span class="wordmark-mark">M</span><span>Must-Have GitHub Apps</span></a
+        >
         <nav class="nav" aria-label="Primary navigation">
           <a href="/apps/">Directory</a>
           <a href="/categories/">Categories</a>
+          <a href="/collections/">Collections</a>
           <a href="/about/">Method</a>
-          <a href="https://github.com/jordan-thirkle/must-have-github-apps">GitHub</a>
+          <a
+            class="nav-github"
+            href="https://github.com/jordan-thirkle/must-have-github-apps"
+            rel="noopener"><Icon name="external" size={14} /> GitHub</a
+          >
+          <ThemeToggle />
         </nav>
       </div>
     </header>
-    <main>
-      <slot />
-    </main>
+    <main id="main-content"><slot /></main>
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>Independent directory. Evidence before hype.</p>
-        <p class="mono">
-          <a href="/contribute/">Contribute</a> · <a href="/about/">About the project</a>
-        </p>
+        <div>
+          <p class="footer-title">Must-Have GitHub Apps</p><p>
+            Independent directory for safer, more maintainable repositories.
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="/contribute/">Contribute</a><a href="/about/">Method</a><a
+            href="https://github.com/jordan-thirkle/must-have-github-apps"
+            rel="noopener">Source <Icon name="external" size={13} /></a
+          >
+        </div>
+      </div>
+      <div class="container footer-note">
+        Not affiliated with or endorsed by GitHub. GitHub and GitHub Marketplace are trademarks of
+        GitHub, Inc.
       </div>
     </footer>
   </body>

@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+---
+
+<button
+  class="theme-toggle icon-button"
+  type="button"
+  aria-label="Switch colour theme"
+  data-theme-toggle
+>
+  <span data-theme-icon
+    ><span class="theme-sun"><Icon name="sun" /></span><span class="theme-moon"
+      ><Icon name="moon" /></span
+    ></span
+  >
+</button>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const root = document.documentElement;
+  const stored = localStorage.getItem('theme');
+  if (stored) root.dataset.theme = stored;
+  button?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

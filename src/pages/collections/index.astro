@@ -1,0 +1,41 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+const collections = [
+  {
+    slug: 'new-repository-baseline',
+    title: 'New repository baseline',
+    description: 'A practical first pass for security, dependency health, and repeatable checks.',
+  },
+];
+---
+
+<BaseLayout
+  title="GitHub App Collections | Must-Have GitHub Apps"
+  description="Curated GitHub tool collections for repository security, dependency maintenance, automation, and AI-assisted development."
+>
+  <section class="container page-intro">
+    <p class="eyebrow">Collections</p><h1 class="display">Start with a job-sized shortlist.</h1><p>
+      Curated paths through the directory. Each collection explains why the tools belong together
+      and what to check before installing them.
+    </p>
+  </section>
+  <section class="container section">
+    <div class="collection-list">
+      {
+        collections.map((collection) => (
+          <a class="collection-row" href={`/collections/${collection.slug}/`}>
+            <>
+              <span>
+                <>
+                  <h2>{collection.title}</h2>
+                  <p>{collection.description}</p>
+                </>
+              </span>
+              <span aria-hidden="true">→</span>
+            </>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

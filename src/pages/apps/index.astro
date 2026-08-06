@@ -1,58 +1,128 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppCard from '@/components/AppCard.astro';
-import { getApps } from '@/lib/directory';
+import Icon from '@/components/Icon.astro';
+import { entryTypeLabel, getApps, getCategories } from '@/lib/directory';
 
 const apps = await getApps();
+const categories = await getCategories();
+const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
 ---
 
 <BaseLayout
   title="GitHub Apps Directory | Must-Have GitHub Apps"
-  description="Browse reviewed GitHub Apps, native features, Actions, and integrations by permissions, setup effort, pricing, privacy, and job."
+  description="Compare reviewed GitHub Apps, native features, Actions, and integrations by job, access, setup, pricing, privacy, and upkeep."
 >
   <section class="container page-intro">
-    <p class="eyebrow mono">The directory</p>
-    <h1 class="display">Tools worth understanding before installing.</h1>
+    <p class="eyebrow">Directory</p>
+    <h1 class="display">Compare GitHub tools by job, access, and upkeep.</h1>
     <p>
-      One canonical record per product. No mystery rankings. Use the evidence, permissions, review
-      dates, and limitations to decide what belongs in your repository.
+      Every entry has one source record, dated evidence, and a clear account of what it can access.
     </p>
   </section>
   <section class="container section">
+    <div class="filter-panel" aria-label="Directory filters">
+      <div class="filter-search">
+        <label for="app-search">Search entries</label><div class="search-input">
+          <Icon name="search" size={16} /><input
+            id="app-search"
+            type="search"
+            placeholder="Tool, job, or vendor"
+            autocomplete="off"
+          />
+        </div>
+      </div>
+      <label
+        >Job<select id="filter-category"
+          ><option value="">All jobs</option>{
+            categories.map((category) => (
+              <option value={category.data.slug}>{category.data.name}</option>
+            ))
+          }</select
+        ></label
+      >
+      <label
+        >Type<select id="filter-type"
+          ><option value="">All types</option>{
+            entryTypes.map((type) => <option value={type}>{entryTypeLabel(type)}</option>)
+          }</select
+        ></label
+      >
+      <label
+        >Setup<select id="filter-setup"
+          ><option value="">Any setup</option><option value="low">Low</option><option value="medium"
+            >Medium</option
+          ><option value="high">High</option></select
+        ></label
+      >
+      <label
+        >Sort<select id="filter-sort"
+          ><option value="recommended">Recommended</option><option value="setup"
+            >Lowest setup effort</option
+          ><option value="name">Name</option></select
+        ></label
+      >
+      <button class="reset-button" id="filter-reset" type="button">Reset</button>
+    </div>
     <div class="toolbar mono">
-      <label for="app-search">Filter the directory</label>
-      <input
-        id="app-search"
-        type="search"
-        placeholder="Search by tool, job, or vendor"
-        autocomplete="off"
-      />
-      <span id="app-count">{apps.length} reviewed entries</span><span
-        >Sorted: featured, then name</span
+      <span id="app-count" aria-live="polite">{apps.length} reviewed entries</span><span
+        >Facts are dated and sourced</span
       >
     </div>
-    <div class="app-grid" id="app-grid">
-      {apps.map((app) => <AppCard app={app.data} />)}
-    </div>
-    <p id="app-empty" class="muted" hidden>
-      No reviewed entries match that search. Try a category, vendor, or capability.
+    <div class="app-grid" id="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
+    <p id="app-empty" class="empty-state" hidden>
+      <strong>No entries match those filters.</strong><span
+        >Clear one filter or browse every reviewed entry.</span
+      ><button class="button secondary" id="empty-reset" type="button">Clear filters</button>
     </p>
   </section>
   <script>
     const search = document.querySelector<HTMLInputElement>('#app-search');
+    const controls = [...document.querySelectorAll<HTMLSelectElement>('.filter-panel select')];
     const cards = [...document.querySelectorAll<HTMLElement>('[data-app-card]')];
     const count = document.querySelector<HTMLElement>('#app-count');
     const empty = document.querySelector<HTMLElement>('#app-empty');
-    search?.addEventListener('input', () => {
-      const query = search.value.trim().toLowerCase();
-      let visible = 0;
-      cards.forEach((card) => {
-        const matches = !query || card.dataset.search?.toLowerCase().includes(query);
-        card.hidden = !matches;
-        if (matches) visible += 1;
+    const reset = () => {
+      if (search) search.value = '';
+      controls.forEach((control) => {
+        control.value = control.id === 'filter-sort' ? 'recommended' : '';
       });
-      if (count) count.textContent = `${visible} of ${cards.length} reviewed entries`;
-      if (empty) empty.hidden = visible > 0;
-    });
+      apply();
+    };
+    const apply = () => {
+      const query = search?.value.trim().toLowerCase() || '';
+      const category = document.querySelector<HTMLSelectElement>('#filter-category')?.value || '';
+      const type = document.querySelector<HTMLSelectElement>('#filter-type')?.value || '';
+      const setup = document.querySelector<HTMLSelectElement>('#filter-setup')?.value || '';
+      const sort =
+        document.querySelector<HTMLSelectElement>('#filter-sort')?.value || 'recommended';
+      const grid = document.querySelector<HTMLElement>('#app-grid');
+      const visible = cards.filter((card) => {
+        const matches =
+          (!query || card.dataset.search?.toLowerCase().includes(query)) &&
+          (!category || card.dataset.category === category) &&
+          (!type || card.dataset.entryType === type) &&
+          (!setup || card.dataset.setup === setup);
+        card.hidden = !matches;
+        return matches;
+      });
+      [...cards]
+        .sort((a, b) =>
+          sort === 'name'
+            ? (a.querySelector('h3')?.textContent || '').localeCompare(
+                b.querySelector('h3')?.textContent || '',
+              )
+            : sort === 'setup'
+              ? (a.dataset.setup || '').localeCompare(b.dataset.setup || '')
+              : 0,
+        )
+        .forEach((card) => grid?.append(card));
+      if (count) count.textContent = `${visible.length} of ${cards.length} reviewed entries`;
+      if (empty) empty.hidden = visible.length > 0;
+    };
+    search?.addEventListener('input', apply);
+    controls.forEach((control) => control.addEventListener('change', apply));
+    document.querySelector('#filter-reset')?.addEventListener('click', reset);
+    document.querySelector('#empty-reset')?.addEventListener('click', reset);
   </script>
 </BaseLayout>

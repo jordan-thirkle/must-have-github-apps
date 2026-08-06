@@ -1,17 +1,27 @@
 ---
+import Icon from './Icon.astro';
 import { appPath, entryTypeLabel, formatDate, reviewLabel } from '@/lib/directory';
 const { app } = Astro.props;
+const category = app.categories[0];
+const categoryIcon =
+  category === 'security' ? 'shield' : category === 'dependencies' ? 'package' : 'workflow';
 ---
 
 <a
   class="app-card"
   data-app-card
   data-search={`${app.name} ${app.vendor} ${app.summary} ${app.categories.join(' ')} ${app.tags.join(' ')}`}
+  data-category={app.categories[0]}
+  data-entry-type={app.entryType}
+  data-setup={app.setupLevel}
+  data-pricing={app.pricingModel}
   href={appPath(app.slug)}
 >
   <div>
     <div class="app-meta mono">
-      <span class="app-type">{entryTypeLabel(app.entryType)}</span>
+      <span class="app-type"
+        ><Icon name={categoryIcon} size={15} /> {entryTypeLabel(app.entryType)}</span
+      >
       <span>{app.vendor}</span>
     </div>
     <h3>{app.name}</h3>
