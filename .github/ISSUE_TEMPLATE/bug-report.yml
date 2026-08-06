@@ -1,0 +1,27 @@
+name: Directory issue
+description: Report an outdated, incorrect, or broken directory entry.
+title: "[Issue] "
+labels:
+  - triage
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Affected page or file
+      placeholder: README.md or a future directory entry
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong?
+      description: Explain what is inaccurate, outdated, or broken.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and suggested correction
+      description: Include official links, dates, and a proposed fix where possible.
+    validations:
+      required: true

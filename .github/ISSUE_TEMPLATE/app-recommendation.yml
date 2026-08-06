@@ -1,0 +1,50 @@
+name: App recommendation
+description: Suggest a GitHub App or integration for the directory.
+title: "[App] "
+labels:
+  - recommendation
+body:
+  - type: input
+    id: name
+    attributes:
+      label: App name
+      placeholder: Example App
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Official URL
+      description: Link to the official product or GitHub Marketplace listing.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem solved
+      description: What practical problem does this solve, and who benefits?
+    validations:
+      required: true
+  - type: textarea
+    id: permissions
+    attributes:
+      label: Permissions and data access
+      description: List requested permissions and explain why they are needed.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Setup, pricing, and trade-offs
+      description: Include setup effort, current plan limits, maintenance, and alternatives.
+    validations:
+      required: true
+  - type: checkboxes
+    id: disclosure
+    attributes:
+      label: Disclosure
+      options:
+        - label: I have no undisclosed financial or affiliate relationship with this product.
+          required: true
+        - label: I have checked the official documentation and the information is current to the best of my knowledge.
+          required: true
