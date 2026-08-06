@@ -1,6 +1,8 @@
 # Must-Have GitHub Apps
 
-A practical, security-first directory of GitHub Apps, integrations, and developer tools worth installing.
+A practical, security-first directory of GitHub Apps, integrations, and developer tools worth understanding before installing.
+
+**Browse the directory:** [must-have-github-apps.vercel.app](https://must-have-github-apps.vercel.app/)
 
 Many developers — especially people building quickly with AI or “vibe coding” — discover GitHub Apps only after something goes wrong. Security scanners, dependency alerts, code quality checks, CI helpers, release tools, and project automations can remove a huge amount of stress before problems become emergencies.
 
@@ -32,20 +34,25 @@ Recommendations should help a real GitHub repository become safer, more reliable
 
 Security and privacy come before popularity. A tool should never be recommended only because it is fashionable or heavily marketed.
 
-## Planned directory
+## Directory
 
-The directory will be organised by job rather than by vendor:
+The directory is organised by job rather than by vendor:
 
-- Security and secret scanning
-- Dependency and supply-chain security
+- [Security](https://must-have-github-apps.vercel.app/categories/security/)
+- [Dependencies and supply chain](https://must-have-github-apps.vercel.app/categories/dependencies/)
 - Code review and static analysis
 - Testing and CI/CD
-- Releases and versioning
-- Documentation and project management
-- Issue and pull request automation
+- [Repository automation](https://must-have-github-apps.vercel.app/categories/automation/)
 - Monitoring, error tracking, and observability
 - Developer productivity
-- GitHub Marketplace essentials
+
+Browse the [full app directory](https://must-have-github-apps.vercel.app/apps/). Each active entry has one canonical record with permissions, data access, setup, pricing, privacy notes, limitations, alternatives, official sources, and review dates.
+
+### Review lifecycle
+
+Entries are reviewed on a volatility-based schedule: fast-changing security and pricing information is checked more often than stable open-source tooling. A weekly workflow reports overdue reviews and broken sources as one deduplicated GitHub issue. Claims change through reviewed commits, not silent API rewrites.
+
+A listing is not a security guarantee or universal endorsement. Unknown information stays unknown until it can be verified.
 
 ## Why this exists
 

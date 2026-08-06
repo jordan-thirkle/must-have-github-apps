@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import { siteDescription, siteName } from '@/lib/directory';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = siteName,
+  description = siteDescription,
+  canonical = Astro.url.href,
+  type = 'website',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="wordmark" href="/">Must-Have GitHub Apps</a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="/apps/">Directory</a>
+          <a href="/categories/">Categories</a>
+          <a href="/about/">Method</a>
+          <a href="https://github.com/jordan-thirkle/must-have-github-apps">GitHub</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>Independent directory. Evidence before hype.</p>
+        <p class="mono">
+          <a href="/contribute/">Contribute</a> · <a href="/about/">About the project</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

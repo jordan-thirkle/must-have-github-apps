@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppCard from '@/components/AppCard.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { appPath } from '@/lib/directory';
+
+export async function getStaticPaths() {
+  const categories = await getCollection('categories');
+  return categories.map((category) => ({
+    params: { slug: category.data.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const apps = (
+  await getCollection(
+    'apps',
+    ({ data }) => data.status === 'active' && data.categories.includes(category.data.slug),
+  )
+).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const description = category.data.seoDescription || category.data.description;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: category.data.name,
+  description,
+  url: Astro.url.href,
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: apps.length,
+    itemListElement: apps.map((app, position) => ({
+      '@type': 'ListItem',
+      position: position + 1,
+      url: new URL(appPath(app.data.slug), Astro.site).href,
+      name: app.data.name,
+    })),
+  },
+};
+---
+
+<BaseLayout
+  title={category.data.seoTitle || `${category.data.name} | Must-Have GitHub Apps`}
+  description={description}
+>
+  <div class="container">
+    <Breadcrumbs
+      items={[{ label: 'Categories', href: '/categories/' }, { label: category.data.name }]}
+    />
+  </div>
+  <section class="container page-intro">
+    <p class="eyebrow mono">Category {String(category.data.order).padStart(2, '0')}</p><h1
+      class="display"
+    >
+      {category.data.name}
+    </h1><p>{category.data.intro}</p>
+  </section>
+  <JsonLd data={schema} />
+  <section class="container section">
+    <div class="toolbar mono">
+      <span>{apps.length} reviewed entries</span><a href="/apps/">Browse all →</a>
+    </div><div class="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
+  </section>
+</BaseLayout>

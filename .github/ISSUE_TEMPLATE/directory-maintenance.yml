@@ -1,0 +1,41 @@
+name: Directory maintenance
+description: Report outdated, incorrect, or broken directory information.
+title: '[Maintenance] '
+labels:
+  - maintenance
+body:
+  - type: input
+    id: entry
+    attributes:
+      label: Entry slug or URL
+      placeholder: apps/example/
+    validations:
+      required: true
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: What needs attention?
+      options:
+        - Broken link
+        - Permissions or data access
+        - Pricing or plan limits
+        - Privacy or retention
+        - Product capability
+        - Product shutdown or replacement
+        - Other factual correction
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong?
+      description: Identify the exact claim or link that needs review.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Official corrective evidence
+      description: Include an official URL and the date you checked it.
+    validations:
+      required: true

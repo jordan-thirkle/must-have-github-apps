@@ -1,0 +1,107 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppCard from '@/components/AppCard.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { categoryPath, getApps, getCategories, siteDescription, siteName } from '@/lib/directory';
+
+const apps = await getApps();
+const categories = await getCategories();
+const featured = apps.filter(({ data }) => data.featured);
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  description: siteDescription,
+  url: Astro.site,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${Astro.site}apps/?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+---
+
+<BaseLayout
+  title="Must-Have GitHub Apps | Security, Automation, and Developer Tools"
+  description="A security-first directory of GitHub Apps, integrations, Actions, and developer tools, reviewed for permissions, setup, pricing, privacy, and trade-offs."
+>
+  <JsonLd data={schema} />
+  <section class="container hero">
+    <div>
+      <p class="eyebrow mono">A practical directory for modern repositories</p>
+      <h1 class="display">GitHub can do more than store your code.</h1>
+      <p class="hero-copy">
+        Discover the security scanners, dependency tools, review systems, and automations that keep
+        fast-moving projects safer and easier to maintain.
+      </p>
+    </div>
+    <aside class="hero-note">
+      <p><strong>Start with less stress.</strong></p>
+      <p>
+        Understand what an app can access before you install it. Every entry shows permissions, data
+        access, setup, pricing, limitations, alternatives, and when it was last reviewed.
+      </p>
+    </aside>
+  </section>
+
+  <section class="container section rule" aria-labelledby="start-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow mono">Start here</p>
+        <h2 id="start-heading" class="display">Protect the risks you are most likely to miss.</h2>
+      </div>
+      <p>
+        There is no prize for installing everything. Pick the job that is currently creating risk,
+        then understand the access model before adding another integration.
+      </p>
+    </div>
+    <div class="category-list">
+      {
+        categories.map((category, index) => (
+          <a class="category-row" href={categoryPath(category.data.slug)}>
+            <span class="category-number mono">{String(index + 1).padStart(2, '0')}</span>
+            <span>
+              <>
+                <h3>{category.data.name}</h3>
+                <p>{category.data.description}</p>
+              </>
+            </span>
+            <span class="category-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="featured-heading">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow mono">Reviewed starting points</p><h2
+          id="featured-heading"
+          class="display"
+        >
+          A small baseline beats a huge list.
+        </h2>
+      </div>
+      <a class="text-link" href="/apps/">View all apps →</a>
+    </div>
+    <div class="app-grid">
+      {featured.map((app) => <AppCard app={app.data} />)}
+    </div>
+  </section>
+
+  <section class="container section">
+    <div class="callout">
+      <h2 class="display">
+        You are not a fool for missing this. Most people never get shown the map.
+      </h2>
+      <p>
+        This directory exists to make GitHub’s hidden leverage easier to discover, compare, and
+        maintain. Browse by job, inspect the permissions, and keep the useful parts.
+      </p>
+      <a class="text-link" href="/about/">Read the editorial method →</a>
+    </div>
+  </section>
+</BaseLayout>

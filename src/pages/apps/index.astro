@@ -1,0 +1,58 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppCard from '@/components/AppCard.astro';
+import { getApps } from '@/lib/directory';
+
+const apps = await getApps();
+---
+
+<BaseLayout
+  title="GitHub Apps Directory | Must-Have GitHub Apps"
+  description="Browse reviewed GitHub Apps, native features, Actions, and integrations by permissions, setup effort, pricing, privacy, and job."
+>
+  <section class="container page-intro">
+    <p class="eyebrow mono">The directory</p>
+    <h1 class="display">Tools worth understanding before installing.</h1>
+    <p>
+      One canonical record per product. No mystery rankings. Use the evidence, permissions, review
+      dates, and limitations to decide what belongs in your repository.
+    </p>
+  </section>
+  <section class="container section">
+    <div class="toolbar mono">
+      <label for="app-search">Filter the directory</label>
+      <input
+        id="app-search"
+        type="search"
+        placeholder="Search by tool, job, or vendor"
+        autocomplete="off"
+      />
+      <span id="app-count">{apps.length} reviewed entries</span><span
+        >Sorted: featured, then name</span
+      >
+    </div>
+    <div class="app-grid" id="app-grid">
+      {apps.map((app) => <AppCard app={app.data} />)}
+    </div>
+    <p id="app-empty" class="muted" hidden>
+      No reviewed entries match that search. Try a category, vendor, or capability.
+    </p>
+  </section>
+  <script>
+    const search = document.querySelector<HTMLInputElement>('#app-search');
+    const cards = [...document.querySelectorAll<HTMLElement>('[data-app-card]')];
+    const count = document.querySelector<HTMLElement>('#app-count');
+    const empty = document.querySelector<HTMLElement>('#app-empty');
+    search?.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matches = !query || card.dataset.search?.toLowerCase().includes(query);
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      if (count) count.textContent = `${visible} of ${cards.length} reviewed entries`;
+      if (empty) empty.hidden = visible > 0;
+    });
+  </script>
+</BaseLayout>

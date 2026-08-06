@@ -1,0 +1,127 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { entryTypeLabel, formatDate } from '@/lib/directory';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps
+    .filter(({ data }) => data.status !== 'removed')
+    .map((app) => ({ params: { slug: app.data.slug }, props: { app } }));
+}
+
+const { app } = Astro.props;
+const { data } = app;
+const allApps = await getCollection('apps');
+const appSlugs = new Set(allApps.map(({ data: appData }) => appData.slug));
+const description = data.seoDescription || data.summary;
+const schemaType =
+  data.entryType === 'native_feature' ? 'SoftwareApplication' : 'SoftwareApplication';
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': schemaType,
+  name: data.name,
+  description,
+  url: Astro.url.href,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Web',
+  provider: { '@type': 'Organization', name: data.vendor },
+  isAccessibleForFree: data.freeTier,
+};
+---
+
+<BaseLayout
+  title={data.seoTitle || `${data.name}: Permissions, Setup, and Alternatives`}
+  description={description}
+  type="article"
+>
+  <div class="container">
+    <Breadcrumbs items={[{ label: 'Apps', href: '/apps/' }, { label: data.name }]} />
+  </div>
+  <section class="container detail-grid">
+    <div class="detail-header">
+      <p class="eyebrow mono">{entryTypeLabel(data.entryType)} · {data.vendor}</p>
+      <h1 class="display">{data.name}</h1>
+      <p class="summary">{data.summary}</p>
+      <div class="detail-actions">
+        <a class="button" href={data.officialUrl} rel="nofollow">Official site ↗</a><a
+          class="button secondary"
+          href={data.documentationUrl}
+          rel="nofollow">Documentation ↗</a
+        >
+      </div>
+    </div>
+    <aside class="detail-aside" aria-label="At a glance">
+      <dl class="fact-list">
+        <div class="fact"><dt>Setup</dt><dd>{data.setupLevel}</dd></div>
+        <div class="fact"><dt>Maintenance</dt><dd>{data.maintenanceLevel}</dd></div>
+        <div class="fact">
+          <dt>Pricing</dt><dd>{data.pricingModel}{data.freeTier ? ' · free option' : ''}</dd>
+        </div>
+        <div class="fact"><dt>Data leaves GitHub</dt><dd>{data.dataLeavesGitHub}</dd></div>
+        <div class="fact"><dt>Last reviewed</dt><dd>{formatDate(data.reviewedAt)}</dd></div>
+        <div class="fact"><dt>Next review</dt><dd>{formatDate(data.nextReviewAt)}</dd></div>
+      </dl>
+    </aside>
+  </section>
+  <JsonLd data={schema} />
+  <article class="container detail-content">
+    <h2>What it solves</h2><p>{data.problem}</p>
+    <h2>Best for</h2><ul>{data.bestFor.map((item) => <li>{item}</li>)}</ul>
+    <h2>Not for</h2><ul>{data.notFor.map((item) => <li>{item}</li>)}</ul>
+    <h2>Access and permissions</h2><p>{data.accessSummary}</p><table class="permission-table">
+      <thead><tr><th>Resource</th><th>Access</th><th>Scope</th><th>Purpose</th></tr></thead><tbody
+        >{
+          data.permissions.map((permission) => (
+            <tr>
+              <>
+                <td>{permission.resource}</td>
+                <td>{permission.access}</td>
+                <td>{permission.scope}</td>
+                <td>{permission.purpose}</td>
+              </>
+            </tr>
+          ))
+        }</tbody
+      >
+    </table>
+    <h2>Setup, pricing, and privacy</h2><p><strong>Pricing:</strong> {data.pricingSummary}</p><p>
+      <strong>Privacy:</strong>
+      {data.privacySummary}
+    </p><p><strong>Data it may access:</strong> {data.dataAccess.join(', ')}.</p>
+    <h2>Strengths and limitations</h2><ul>
+      {data.strengths.map((item) => <li>{item}</li>)}{
+        data.limitations.map((item) => <li>{item}</li>)
+      }
+    </ul>
+    <h2>Alternatives</h2><p>
+      {
+        data.alternatives.map((alternative) =>
+          appSlugs.has(alternative) ? (
+            <a href={`/apps/${alternative}/`} style="margin-right: 1.2rem">
+              {alternative}
+            </a>
+          ) : (
+            <span style="margin-right: 1.2rem">{alternative}</span>
+          ),
+        )
+      }
+    </p>
+    <h2>Sources</h2><ul class="sources">
+      {
+        data.sources.map((source) => (
+          <li>
+            <a href={source.url} rel="nofollow">
+              {source.label}
+            </a>{' '}
+            <span class="mono muted">
+              ({source.type}, checked {formatDate(source.checkedAt)})
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</BaseLayout>

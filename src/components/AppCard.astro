@@ -1,0 +1,24 @@
+---
+import { appPath, entryTypeLabel, formatDate, reviewLabel } from '@/lib/directory';
+const { app } = Astro.props;
+---
+
+<a
+  class="app-card"
+  data-app-card
+  data-search={`${app.name} ${app.vendor} ${app.summary} ${app.categories.join(' ')} ${app.tags.join(' ')}`}
+  href={appPath(app.slug)}
+>
+  <div>
+    <div class="app-meta mono">
+      <span class="app-type">{entryTypeLabel(app.entryType)}</span>
+      <span>{app.vendor}</span>
+    </div>
+    <h3>{app.name}</h3>
+    <p>{app.summary}</p>
+  </div>
+  <div class="app-footer mono">
+    <span>{app.setupLevel} setup · {app.pricingModel}</span>
+    <span>{reviewLabel(app.nextReviewAt)} · {formatDate(app.reviewedAt)}</span>
+  </div>
+</a>
