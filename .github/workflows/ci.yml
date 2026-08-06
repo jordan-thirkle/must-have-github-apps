@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -14,7 +15,7 @@ permissions:
 
 jobs:
   validate:
-    name: Validate and build
+    name: validate
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

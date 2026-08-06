@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
   schedule:
     - cron: '23 4 * * 1'
 
@@ -17,7 +18,7 @@ permissions:
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze (javascript-typescript)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
