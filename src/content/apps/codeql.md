@@ -43,7 +43,7 @@ dataAccess:
   - source code
   - build information
   - analysis results
-dataLeavesGitHub: no
+dataLeavesGitHub: unknown
 setupLevel: medium
 maintenanceLevel: medium
 pricingModel: included

@@ -43,7 +43,7 @@ dataAccess:
   - dependency manifests
   - lockfiles
   - vulnerability metadata
-dataLeavesGitHub: no
+dataLeavesGitHub: unknown
 setupLevel: low
 maintenanceLevel: low
 pricingModel: included

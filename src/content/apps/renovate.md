@@ -42,9 +42,9 @@ permissions:
     scope: repository
   - resource: issues
     access: write
-    purpose: Add metadata or discussion to update work where configured.
+    purpose: Add metadata or discussion to update work when that optional feature is configured.
     scope: repository
-accessSummary: A GitHub App or self-hosted deployment needs write access to create update branches and pull requests. Review the selected installation scope and configuration before enabling automerge.
+accessSummary: A GitHub App or self-hosted deployment needs write access to create update branches and pull requests. Issue write access is optional for some configurations. Review the selected installation scope before enabling automatic merges.
 dataAccess:
   - dependency manifests
   - lockfiles

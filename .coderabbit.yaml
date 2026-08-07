@@ -1,8 +1,5 @@
 language: en-GB
-tone_instructions: >-
-  Use plain English. Be concise, specific, and respectful. Explain technical terms when they
-  matter. Prioritise security, accessibility, content accuracy, maintainability, and user impact.
-  Do not praise work without evidence. Do not suggest unnecessary abstractions or cosmetic changes.
+tone_instructions: 'Use plain English. Be concise, specific, respectful, security-aware, and user-focused. Explain technical terms when needed. Avoid praise without evidence and avoid cosmetic changes.'
 reviews:
   profile: chill
   request_changes_workflow: true

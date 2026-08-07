@@ -796,8 +796,6 @@ main {
   }
   .nav {
     gap: 0;
-  }
-  .nav {
     flex-wrap: wrap;
     justify-content: end;
   }

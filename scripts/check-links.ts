@@ -21,11 +21,14 @@ const failures: Array<{ file: string; url: string; status: string }> = [];
 
 for (const { file, url } of uniqueUrls) {
   try {
-    const response = await fetch(url, {
+    let response = await fetch(url, {
       method: 'HEAD',
       redirect: 'follow',
       signal: AbortSignal.timeout(10000),
     });
+    if (response.status === 405 || response.status === 501) {
+      response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(10000) });
+    }
     if (!response.ok) failures.push({ file, url, status: String(response.status) });
   } catch (error) {
     failures.push({ file, url, status: error instanceof Error ? error.message : 'request failed' });

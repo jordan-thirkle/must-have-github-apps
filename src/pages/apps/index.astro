@@ -21,7 +21,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     </p>
   </section>
   <section class="container section">
-    <form class="filter-panel" aria-labelledby="filter-heading" onsubmit="return false;">
+    <form class="filter-panel" id="filter-form" aria-labelledby="filter-heading">
       <h2 id="filter-heading" class="sr-only">Filter the directory</h2>
       <div class="filter-search">
         <label for="app-search">Search entries</label><div class="search-input">
@@ -128,5 +128,8 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     controls.forEach((control) => control.addEventListener('change', apply));
     document.querySelector('#filter-reset')?.addEventListener('click', reset);
     document.querySelector('#empty-reset')?.addEventListener('click', reset);
+    document
+      .querySelector<HTMLFormElement>('#filter-form')
+      ?.addEventListener('submit', (event) => event.preventDefault());
   </script>
 </BaseLayout>

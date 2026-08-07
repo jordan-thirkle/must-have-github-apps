@@ -17,4 +17,4 @@
 - [ ] I added dated sources and set the next review date.
 - [ ] I disclosed any affiliate or financial relationship.
 - [ ] I did not include secrets or private information.
-- [ ] `npm run validate`, `npm test`, `npm run check`, and `npm run build` pass locally.
+- [ ] `npm run validate`, `npm test`, `npm run check`, `npm run build`, and `npm run format:check` pass locally.

@@ -15,15 +15,17 @@ export async function getStaticPaths() {
 const { app } = Astro.props;
 const { data } = app;
 const allApps = await getCollection('apps');
-const appSlugs = new Set(allApps.map(({ data: appData }) => appData.slug));
+const appSlugs = new Set(
+  allApps
+    .filter(({ data: appData }) => appData.status !== 'removed')
+    .map(({ data: appData }) => appData.slug),
+);
 const description = data.seoDescription || data.summary;
 const actionUrls = new Set([data.officialUrl, data.documentationUrl]);
 const evidenceSources = data.sources.filter((source) => !actionUrls.has(source.url));
-const schemaType =
-  data.entryType === 'native_feature' ? 'SoftwareApplication' : 'SoftwareApplication';
 const schema = {
   '@context': 'https://schema.org',
-  '@type': schemaType,
+  '@type': 'SoftwareApplication',
   name: data.name,
   description,
   url: Astro.url.href,
