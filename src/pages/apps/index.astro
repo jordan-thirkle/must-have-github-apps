@@ -21,7 +21,8 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     </p>
   </section>
   <section class="container section">
-    <div class="filter-panel" aria-label="Directory filters">
+    <form class="filter-panel" aria-labelledby="filter-heading" onsubmit="return false;">
+      <h2 id="filter-heading" class="sr-only">Filter the directory</h2>
       <div class="filter-search">
         <label for="app-search">Search entries</label><div class="search-input">
           <Icon name="search" size={16} /><input
@@ -33,7 +34,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
         </div>
       </div>
       <label
-        >Job<select id="filter-category"
+        >Problem to solve<select id="filter-category"
           ><option value="">All jobs</option>{
             categories.map((category) => (
               <option value={category.data.slug}>{category.data.name}</option>
@@ -42,16 +43,16 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
         ></label
       >
       <label
-        >Type<select id="filter-type"
+        >Tool type<select id="filter-type"
           ><option value="">All types</option>{
             entryTypes.map((type) => <option value={type}>{entryTypeLabel(type)}</option>)
           }</select
         ></label
       >
       <label
-        >Setup<select id="filter-setup"
-          ><option value="">Any setup</option><option value="low">Low</option><option value="medium"
-            >Medium</option
+        >Setup effort<select id="filter-setup" aria-describedby="setup-help"
+          ><option value="">Any setup effort</option><option value="low">Low</option><option
+            value="medium">Medium</option
           ><option value="high">High</option></select
         ></label
       >
@@ -63,11 +64,14 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
         ></label
       >
       <button class="reset-button" id="filter-reset" type="button">Reset</button>
-    </div>
+      <p id="setup-help" class="filter-help">
+        Low is easy to start. High needs more setup and ongoing work.
+      </p>
+    </form>
     <div class="toolbar mono">
-      <span id="app-count" aria-live="polite">{apps.length} reviewed entries</span><span
-        >Facts are dated and sourced</span
-      >
+      <span id="app-count" role="status" aria-live="polite"
+        >Showing {apps.length} of {apps.length} reviewed tools.</span
+      ><span>Facts are dated and sourced</span>
     </div>
     <div class="app-grid" id="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
     <p id="app-empty" class="empty-state" hidden>
@@ -117,7 +121,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
               : 0,
         )
         .forEach((card) => grid?.append(card));
-      if (count) count.textContent = `${visible.length} of ${cards.length} reviewed entries`;
+      if (count) count.textContent = `Showing ${visible.length} of ${cards.length} reviewed tools.`;
       if (empty) empty.hidden = visible.length > 0;
     };
     search?.addEventListener('input', apply);

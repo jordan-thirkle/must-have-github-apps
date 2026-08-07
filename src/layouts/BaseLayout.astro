@@ -42,9 +42,15 @@ const {
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
     <script is:inline>
-      document.documentElement.dataset.theme =
-        localStorage.getItem('theme') ||
-        (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      try {
+        document.documentElement.dataset.theme =
+          localStorage.getItem('theme') ||
+          (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch {
+        document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+      }
     </script>
   </head>
   <body>
@@ -62,7 +68,7 @@ const {
           <a
             class="nav-github"
             href="https://github.com/jordan-thirkle/must-have-github-apps"
-            rel="noopener"><Icon name="external" size={14} /> GitHub</a
+            rel="noopener"><Icon name="external" size={14} /> Source</a
           >
           <ThemeToggle />
         </nav>
@@ -80,12 +86,17 @@ const {
           <a href="/contribute/">Contribute</a><a href="/about/">Method</a><a
             href="https://github.com/jordan-thirkle/must-have-github-apps"
             rel="noopener">Source <Icon name="external" size={13} /></a
+          ><a class="star-link" href="https://github.com/jordan-thirkle/must-have-github-apps"
+            >★ Star this project</a
           >
         </div>
       </div>
       <div class="container footer-note">
-        Not affiliated with or endorsed by GitHub. GitHub and GitHub Marketplace are trademarks of
-        GitHub, Inc.
+        <span
+          >Not affiliated with or endorsed by GitHub. GitHub and GitHub Marketplace are trademarks
+          of GitHub, Inc.</span
+        >
+        <span>Built by <a href="https://www.byjtt.com">Jordan Thirkle</a>.</span>
       </div>
     </footer>
   </body>

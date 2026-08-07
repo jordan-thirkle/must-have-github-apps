@@ -5,7 +5,8 @@ import Icon from './Icon.astro';
 <button
   class="theme-toggle icon-button"
   type="button"
-  aria-label="Switch colour theme"
+  aria-label="Switch to dark theme"
+  aria-pressed="false"
   data-theme-toggle
 >
   <span data-theme-icon
@@ -17,11 +18,24 @@ import Icon from './Icon.astro';
 <script>
   const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
   const root = document.documentElement;
-  const stored = localStorage.getItem('theme');
-  if (stored) root.dataset.theme = stored;
+  const current = root.dataset.theme || 'light';
+  if (button) {
+    button.setAttribute('aria-pressed', String(current === 'dark'));
+    button.setAttribute(
+      'aria-label',
+      current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+    );
+  }
   button?.addEventListener('click', () => {
     const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
     root.dataset.theme = next;
-    localStorage.setItem('theme', next);
+    button.setAttribute('aria-pressed', String(next === 'dark'));
+    button.setAttribute(
+      'aria-label',
+      next === 'dark' ? 'Switch to light theme' : 'Switch to dark theme',
+    );
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
   });
 </script>

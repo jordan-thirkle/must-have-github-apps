@@ -69,6 +69,12 @@ alternatives:
 officialUrl: https://github.com/renovatebot/renovate
 documentationUrl: https://docs.renovatebot.com/
 pricingUrl: https://www.mend.io/renovate/
+githubRepository:
+  url: https://github.com/renovatebot/renovate
+  owner: renovatebot
+  name: renovate
+  stars: 22194
+  starsCheckedAt: 2026-08-06
 reviewedAt: 2026-08-06
 nextReviewAt: 2026-11-04
 reviewStatus: verified

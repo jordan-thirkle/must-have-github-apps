@@ -3,39 +3,47 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="About the GitHub Apps Directory | Must-Have GitHub Apps"
-  description="Learn how Must-Have GitHub Apps evaluates permissions, pricing, privacy, setup, evidence, and long-term freshness."
+  title="How the GitHub Apps Directory Works"
+  description="A plain-language explanation of how Must-Have GitHub Apps checks permissions, pricing, privacy, setup, and sources."
 >
   <section class="container page-intro">
-    <p class="eyebrow mono">The method</p><h1 class="display">Evidence before hype.</h1><p>
-      This is an independent directory for developers discovering how much more GitHub can do than
-      store source code.
+    <p class="eyebrow">About</p><h1 class="display">A simple guide to GitHub tools.</h1><p>
+      This independent directory helps people choose tools for their GitHub projects.
     </p>
   </section>
   <section class="container detail-content">
-    <h2>Why it exists</h2><p>
-      People building quickly with AI often discover security scanners, dependency alerts, code
-      review tools, and repository automation only after a stressful failure. That is a
-      discoverability problem, not a character flaw.
-    </p><p>
-      The directory makes the map visible earlier, with enough context to choose deliberately.
+    <h2>What this site does</h2><p>
+      It explains what a tool does, what it can access, what it costs, how much work it adds, and
+      what its limits are. Each entry includes official sources and dates.
     </p>
-    <h2>What we record</h2><p>
-      Every entry separates the product’s stated capabilities from our editorial evaluation. We
-      record entry type, installation model, permissions, data access, setup and maintenance effort,
-      pricing, privacy notes, limitations, alternatives, official sources, and review dates.
+    <h2>How we check entries</h2><p>
+      Automated checks find broken links, formatting problems, and build errors. A person checks the
+      facts before an entry is changed. AI tools may suggest improvements, but they do not replace
+      that review.
     </p>
-    <h2>What we do not claim</h2><p>
-      A listing is not an endorsement, audit, security guarantee, customer count, or promise that a
-      tool fits every repository. A passing scan is evidence, not proof of safety. Unknown
-      information stays unknown until it can be verified.
+    <h2>Why a second review matters</h2><p>
+      The source project protects its main branch. The person who makes a change cannot approve that
+      same change. A second maintainer or trusted reviewer must approve it. This protects the
+      project from accidental or unsafe self-approval.
     </p>
-    <h2>How to help</h2><p>
-      Suggest an app through <a
+    <h2>What we do not promise</h2><p>
+      A listing is not a security audit or a promise that a tool will suit every project. A passing
+      scan is useful evidence, not proof that a project is safe. If a fact cannot be checked, we say
+      so.
+    </p>
+    <h2>Help improve the directory</h2><p>
+      <a
         href="https://github.com/jordan-thirkle/must-have-github-apps/issues/new?template=app-recommendation.yml"
-        >the GitHub recommendation form</a
-      >, or report outdated information with the maintenance form. Useful contributions include
-      official sources, permission notes, current plan limits, and honest trade-offs.
+        >Suggest a tool</a
+      > or <a
+        href="https://github.com/jordan-thirkle/must-have-github-apps/issues/new?template=directory-maintenance.yml"
+        >report an outdated fact</a
+      >.
+    </p>
+    <p>
+      <a class="button" href="https://github.com/jordan-thirkle/must-have-github-apps"
+        >★ Star this project on GitHub</a
+      >
     </p>
   </section>
 </BaseLayout>

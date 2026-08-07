@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import JsonLd from '@/components/JsonLd.astro';
-import { entryTypeLabel, formatDate } from '@/lib/directory';
+import { entryTypeLabel, formatDate, formatStars } from '@/lib/directory';
 
 export async function getStaticPaths() {
   const apps = await getCollection('apps');
@@ -17,6 +17,8 @@ const { data } = app;
 const allApps = await getCollection('apps');
 const appSlugs = new Set(allApps.map(({ data: appData }) => appData.slug));
 const description = data.seoDescription || data.summary;
+const actionUrls = new Set([data.officialUrl, data.documentationUrl]);
+const evidenceSources = data.sources.filter((source) => !actionUrls.has(source.url));
 const schemaType =
   data.entryType === 'native_feature' ? 'SoftwareApplication' : 'SoftwareApplication';
 const schema = {
@@ -46,33 +48,63 @@ const schema = {
       <h1 class="display">{data.name}</h1>
       <p class="summary">{data.summary}</p>
       <div class="detail-actions">
-        <a class="button" href={data.officialUrl} rel="nofollow">Official site ↗</a><a
-          class="button secondary"
-          href={data.documentationUrl}
-          rel="nofollow">Documentation ↗</a
-        >
+        <a class="button" href={data.officialUrl}>Official site <span aria-hidden="true">↗</span></a
+        ><a class="button secondary" href={data.documentationUrl}>Documentation</a>
+        {
+          data.githubRepository && (
+            <a class="button secondary" href={data.githubRepository.url}>
+              GitHub repository <span aria-hidden="true">↗</span>
+            </a>
+          )
+        }
       </div>
     </div>
     <aside class="detail-aside" aria-label="At a glance">
       <dl class="fact-list">
-        <div class="fact"><dt>Setup</dt><dd>{data.setupLevel}</dd></div>
-        <div class="fact"><dt>Maintenance</dt><dd>{data.maintenanceLevel}</dd></div>
+        <div class="fact"><dt>Setup effort</dt><dd>{data.setupLevel}</dd></div>
+        <div class="fact"><dt>Ongoing maintenance</dt><dd>{data.maintenanceLevel}</dd></div>
         <div class="fact">
-          <dt>Pricing</dt><dd>{data.pricingModel}{data.freeTier ? ' · free option' : ''}</dd>
+          <dt>Pricing model</dt><dd>{data.pricingModel}{data.freeTier ? ' · free option' : ''}</dd>
         </div>
-        <div class="fact"><dt>Data leaves GitHub</dt><dd>{data.dataLeavesGitHub}</dd></div>
-        <div class="fact"><dt>Last reviewed</dt><dd>{formatDate(data.reviewedAt)}</dd></div>
-        <div class="fact"><dt>Next review</dt><dd>{formatDate(data.nextReviewAt)}</dd></div>
+        <div class="fact">
+          <dt>Does data go outside GitHub?</dt><dd>{data.dataLeavesGitHub}</dd>
+        </div>
+        {
+          data.githubRepository?.stars !== undefined && (
+            <div class="fact">
+              <>
+                <dt>GitHub stars</dt>
+                <dd>
+                  <>
+                    <span aria-label={`${formatStars(data.githubRepository.stars)} GitHub stars`}>
+                      ★ {formatStars(data.githubRepository.stars)}
+                    </span>
+                    <small> · checked {formatDate(data.githubRepository.starsCheckedAt!)}</small>
+                  </>
+                </dd>
+              </>
+            </div>
+          )
+        }
+        <div class="fact"><dt>Last checked</dt><dd>{formatDate(data.reviewedAt)}</dd></div>
+        <div class="fact"><dt>Next check</dt><dd>{formatDate(data.nextReviewAt)}</dd></div>
       </dl>
     </aside>
   </section>
   <JsonLd data={schema} />
   <article class="container detail-content">
-    <h2>What it solves</h2><p>{data.problem}</p>
-    <h2>Best for</h2><ul>{data.bestFor.map((item) => <li>{item}</li>)}</ul>
-    <h2>Not for</h2><ul>{data.notFor.map((item) => <li>{item}</li>)}</ul>
+    <h2>What this tool does</h2><p>{data.problem}</p>
+    <h2>When it may fit</h2><ul>{data.bestFor.map((item) => <li>{item}</li>)}</ul>
+    <h2>When it may not fit</h2><ul>{data.notFor.map((item) => <li>{item}</li>)}</ul>
     <h2>Access and permissions</h2><p>{data.accessSummary}</p><table class="permission-table">
-      <thead><tr><th>Resource</th><th>Access</th><th>Scope</th><th>Purpose</th></tr></thead><tbody
+      <caption>Permissions for {data.name}</caption>
+      <thead
+        ><tr
+          ><th scope="col">Resource</th><th scope="col">Access</th><th scope="col">Scope</th><th
+            scope="col">Purpose</th
+          ></tr
+        ></thead
+      ><tbody
         >{
           data.permissions.map((permission) => (
             <tr>
@@ -87,15 +119,12 @@ const schema = {
         }</tbody
       >
     </table>
-    <h2>Setup, pricing, and privacy</h2><p><strong>Pricing:</strong> {data.pricingSummary}</p><p>
+    <h2>Pricing, privacy, and data</h2><p><strong>Pricing:</strong> {data.pricingSummary}</p><p>
       <strong>Privacy:</strong>
       {data.privacySummary}
     </p><p><strong>Data it may access:</strong> {data.dataAccess.join(', ')}.</p>
-    <h2>Strengths and limitations</h2><ul>
-      {data.strengths.map((item) => <li>{item}</li>)}{
-        data.limitations.map((item) => <li>{item}</li>)
-      }
-    </ul>
+    <h2>Strengths</h2><ul>{data.strengths.map((item) => <li>{item}</li>)}</ul>
+    <h2>Limitations</h2><ul>{data.limitations.map((item) => <li>{item}</li>)}</ul>
     <h2>Alternatives</h2><p>
       {
         data.alternatives.map((alternative) =>
@@ -109,9 +138,9 @@ const schema = {
         )
       }
     </p>
-    <h2>Sources</h2><ul class="sources">
+    <h2>Evidence checked</h2><ul class="sources">
       {
-        data.sources.map((source) => (
+        evidenceSources.map((source) => (
           <li>
             <a href={source.url} rel="nofollow">
               {source.label}

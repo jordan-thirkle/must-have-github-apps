@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { categoryDefinitions } from '@/content.config';
+export { formatStars } from './format';
 
 export const siteName = 'Must-Have GitHub Apps';
 export const siteDescription =
@@ -38,8 +39,12 @@ export function formatDate(date: Date) {
   }).format(date);
 }
 
-export function reviewLabel(nextReviewAt: Date) {
-  return nextReviewAt < new Date() ? 'Review due' : 'Reviewed';
+export function reviewState(reviewedAt: Date, nextReviewAt: Date) {
+  return {
+    overdue: nextReviewAt < new Date(),
+    lastChecked: formatDate(reviewedAt),
+    nextCheck: formatDate(nextReviewAt),
+  };
 }
 
 export function entryTypeLabel(entryType: string) {

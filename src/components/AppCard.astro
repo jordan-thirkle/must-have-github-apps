@@ -1,10 +1,11 @@
 ---
 import Icon from './Icon.astro';
-import { appPath, entryTypeLabel, formatDate, reviewLabel } from '@/lib/directory';
+import { appPath, entryTypeLabel, formatDate, formatStars, reviewState } from '@/lib/directory';
 const { app } = Astro.props;
 const category = app.categories[0];
 const categoryIcon =
   category === 'security' ? 'shield' : category === 'dependencies' ? 'package' : 'workflow';
+const review = reviewState(app.reviewedAt, app.nextReviewAt);
 ---
 
 <a
@@ -29,6 +30,16 @@ const categoryIcon =
   </div>
   <div class="app-footer mono">
     <span>{app.setupLevel} setup · {app.pricingModel}</span>
-    <span>{reviewLabel(app.nextReviewAt)} · {formatDate(app.reviewedAt)}</span>
+    {
+      app.githubRepository?.stars !== undefined ? (
+        <span
+          aria-label={`${formatStars(app.githubRepository.stars)} GitHub stars, checked ${formatDate(app.githubRepository.starsCheckedAt!)}`}
+        >
+          <span aria-hidden="true">★</span> {formatStars(app.githubRepository.stars)} stars
+        </span>
+      ) : (
+        <span>Last checked {review.lastChecked}</span>
+      )
+    }
   </div>
 </a>

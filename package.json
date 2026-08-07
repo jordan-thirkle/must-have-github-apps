@@ -14,6 +14,7 @@
     "validate": "tsx scripts/validate-content.ts",
     "freshness": "tsx scripts/check-freshness.ts",
     "links": "tsx scripts/check-links.ts",
+    "refresh:github": "tsx scripts/update-repository-metadata.ts",
     "format:check": "prettier --check .",
     "test": "tsx --test scripts/*.test.ts"
   },

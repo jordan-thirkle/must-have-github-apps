@@ -72,6 +72,24 @@ const apps = defineCollection({
     marketplaceUrl: z.url().optional(),
     pricingUrl: z.url().optional(),
     privacyUrl: z.url().optional(),
+    githubRepository: z
+      .object({
+        url: z
+          .url()
+          .refine(
+            (value) => /^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(value),
+            'Must be a GitHub repository URL',
+          ),
+        owner: z.string().min(1),
+        name: z.string().min(1),
+        stars: z.number().int().nonnegative().optional(),
+        starsCheckedAt: z.coerce.date().optional(),
+      })
+      .refine(
+        (value) => value.stars === undefined || value.starsCheckedAt !== undefined,
+        'Stars require a checked date',
+      )
+      .optional(),
     reviewedAt: z.coerce.date(),
     nextReviewAt: z.coerce.date(),
     reviewStatus: z.enum(['verified', 'needs-review', 'candidate']),

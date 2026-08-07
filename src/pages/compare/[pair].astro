@@ -44,18 +44,19 @@ const rows = [
   <section class="container section">
     <div class="compare-wrap">
       <table class="compare-table">
+        <caption>Dependabot and CodeQL comparison</caption>
         <thead
           ><tr
-            ><th>Dimension</th><th><a href="/apps/dependabot/">Dependabot</a></th><th
-              ><a href="/apps/codeql/">CodeQL</a></th
-            ></tr
+            ><th scope="col">Dimension</th><th scope="col"
+              ><a href="/apps/dependabot/">Dependabot</a></th
+            ><th scope="col"><a href="/apps/codeql/">CodeQL</a></th></tr
           ></thead
         ><tbody
           >{
             rows.map(([label, left, right]) => (
               <tr>
                 <>
-                  <th>{label}</th>
+                  <th scope="row">{label}</th>
                   <td>{left}</td>
                   <td>{right}</td>
                 </>

@@ -28,6 +28,20 @@ for (const file of files) {
     errors.push(`${file.name}: nextReviewAt must be after reviewedAt`);
   if (!Array.isArray(data.sources) || data.sources.length < 2)
     errors.push(`${file.name}: at least two dated sources are required`);
+  const repository = data.githubRepository as
+    | { url?: unknown; owner?: unknown; name?: unknown; stars?: unknown; starsCheckedAt?: unknown }
+    | undefined;
+  if (repository) {
+    if (
+      typeof repository.url !== 'string' ||
+      !/^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(repository.url)
+    )
+      errors.push(`${file.name}: githubRepository.url must be a GitHub repository URL`);
+    if (typeof repository.owner !== 'string' || typeof repository.name !== 'string')
+      errors.push(`${file.name}: repository owner and name are required`);
+    if (repository.stars !== undefined && repository.starsCheckedAt === undefined)
+      errors.push(`${file.name}: stars require starsCheckedAt`);
+  }
 }
 
 if (errors.length) {
