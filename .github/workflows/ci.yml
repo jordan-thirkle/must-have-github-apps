@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4 # v4
+        with:
+          persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@v4 # v4
         with:
@@ -46,6 +48,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4 # v4
+        with:
+          persist-credentials: false
       - name: Lint Markdown
         uses: DavidAnson/markdownlint-cli2-action@v20 # v20
         with:

@@ -3,49 +3,44 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import AppCard from '@/components/AppCard.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { collections } from '@/lib/directory';
 
 export async function getStaticPaths() {
-  return [{ params: { slug: 'new-repository-baseline' } }];
+  return collections.map((collection) => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
 }
 
+const { collection } = Astro.props;
 const apps = await getCollection(
   'apps',
-  ({ data }) =>
-    data.status === 'active' &&
-    ['github-secret-scanning', 'dependabot', 'codeql'].includes(data.slug),
+  ({ data }) => data.status === 'active' && collection.apps.includes(data.slug),
 );
 ---
 
 <BaseLayout
-  title="New Repository Security Baseline | Must-Have GitHub Apps"
-  description="A practical starting checklist for secret scanning, dependency alerts, and code analysis in a new GitHub repository."
+  title={`${collection.title} | Must-Have GitHub Apps`}
+  description={collection.description}
 >
   <div class="container">
     <Breadcrumbs
-      items={[
-        { label: 'Collections', href: '/collections/' },
-        { label: 'New repository baseline' },
-      ]}
+      items={[{ label: 'Collections', href: '/collections/' }, { label: collection.title }]}
     />
   </div>
   <section class="container page-intro">
-    <p class="eyebrow">Collection · Security first</p><h1 class="display">
-      A baseline you can maintain.
-    </h1><p>
-      Start with native GitHub controls before adding more services. Enable the checks your
-      repository can act on, then expand as the project earns complexity.
+    <p class="eyebrow">Collection</p><h1 class="display">{collection.title}</h1><p>
+      {collection.description}
     </p>
   </section>
   <section class="container collection-prose">
-    <h2>Order of operations</h2><ol>
+    <h2>Use this order</h2><ol>
       <li>Protect credentials with secret scanning and a rotation path.</li><li>
         Turn on dependency visibility and reviewable update pull requests.
-      </li><li>Add code analysis when your languages and CI can support it.</li><li>
-        Review every write permission before enabling automation or automerge.
+      </li><li>Add code analysis when your languages and checks can support it.</li><li>
+        Review every write permission before enabling automatic merges.
       </li>
-    </ol><p class="muted">
-      A baseline is useful only when alerts have an owner and failed checks have a recovery path.
-    </p>
+    </ol>
   </section>
   <section class="container section">
     <div class="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>

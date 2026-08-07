@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4 # v4
+        with:
+          persist-credentials: false
       - name: Set up Node
         uses: actions/setup-node@v4 # v4
         with:
@@ -38,10 +40,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh label create maintenance --color B60205 --description 'Directory freshness and source maintenance' --force
-          body="$(cat freshness.json; printf '\\n'; cat links.json)"
+          body="$(cat freshness.json; printf '\n'; cat links.json)"
+          issue_body=$(printf '```json\n%s\n```' "$body")
           issue_number="$(gh issue list --state open --label maintenance --search 'in:title Directory health' --json number --jq '.[0].number')"
           if [ -n "$issue_number" ]; then
-            gh issue edit "$issue_number" --body "\\`\\`\\`json\\n$body\\n\\`\\`\\`"
+            gh issue edit "$issue_number" --body "$issue_body"
           else
-            gh issue create --title "Directory health requires review" --label maintenance --body "\\`\\`\\`json\\n$body\\n\\`\\`\\`"
+            gh issue create --title "Directory health requires review" --label maintenance --body "$issue_body"
           fi

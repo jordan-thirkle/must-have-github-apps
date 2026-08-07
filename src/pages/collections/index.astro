@@ -1,23 +1,16 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-const collections = [
-  {
-    slug: 'new-repository-baseline',
-    title: 'New repository baseline',
-    description: 'A practical first pass for security, dependency health, and repeatable checks.',
-  },
-];
+import { collections } from '@/lib/directory';
 ---
 
 <BaseLayout
   title="GitHub App Collections | Must-Have GitHub Apps"
-  description="Curated GitHub tool collections for repository security, dependency maintenance, automation, and AI-assisted development."
+  description="Curated GitHub tool collections for security, dependency maintenance, and repository automation."
 >
   <section class="container page-intro">
-    <p class="eyebrow">Collections</p><h1 class="display">Start with a job-sized shortlist.</h1><p>
-      Curated paths through the directory. Each collection explains why the tools belong together
-      and what to check before installing them.
-    </p>
+    <p class="eyebrow">Collections</p><h1 class="display">
+      Choose a group of tools for one task.
+    </h1><p>Each collection is a short, reviewed path through the directory.</p>
   </section>
   <section class="container section">
     <div class="collection-list">

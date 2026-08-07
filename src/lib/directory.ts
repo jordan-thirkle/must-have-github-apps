@@ -6,6 +6,19 @@ export const siteName = 'Must-Have GitHub Apps';
 export const siteDescription =
   'A security-first directory of GitHub Apps, integrations, Actions, and developer tools.';
 
+export const collections = [
+  {
+    slug: 'new-repository-baseline',
+    title: 'New repository baseline',
+    description: 'A practical first pass for security, dependency health, and repeatable checks.',
+    apps: ['github-secret-scanning', 'dependabot', 'codeql'] as readonly string[],
+  },
+] as const;
+
+export function getCollectionDefinition(slug: string) {
+  return collections.find((collection) => collection.slug === slug);
+}
+
 export function appPath(slug: string) {
   return `/apps/${slug}/`;
 }
