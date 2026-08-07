@@ -2,7 +2,7 @@
 
 A plain-language directory of GitHub Apps, GitHub Actions, security tools, integrations, and developer tools.
 
-**Website:** https://must-have-github-apps.vercel.app/
+**Website:** [must-have-github-apps.vercel.app](https://must-have-github-apps.vercel.app/)
 
 Use this directory to find tools for:
 
