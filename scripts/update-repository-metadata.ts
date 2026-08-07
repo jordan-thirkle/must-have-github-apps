@@ -9,7 +9,7 @@ if (!token) {
   process.exit(1);
 }
 
-for (const name of (await fs.readdir(directory)).filter((file) => file.endsWith('.md'))) {
+for (const name of (await fs.readdir(directory)).filter((file) => /^[a-z0-9-]+\.md$/.test(file))) {
   const filePath = path.join(directory, name);
   const source = await fs.readFile(filePath, 'utf8');
   const parsed = matter(source);
