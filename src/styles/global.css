@@ -827,21 +827,26 @@ main {
   }
   .header-inner {
     min-height: 60px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding-block: 12px;
   }
   .wordmark span:last-child {
-    max-width: 170px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
   }
   .nav {
-    gap: 0;
-    flex-wrap: wrap;
-    justify-content: end;
+    width: 100%;
+    gap: 2px;
+    justify-content: flex-start;
   }
   .nav a,
   .icon-button {
-    padding-inline: 7px;
-    font-size: 0.8rem;
+    min-height: var(--control-height);
+    padding-inline: 8px;
+    font-size: 0.875rem;
   }
   .hero {
     display: flex;
@@ -855,9 +860,6 @@ main {
   }
   .hero h1 {
     font-size: clamp(3.4rem, 16vw, 5.8rem);
-  }
-  .hero-note {
-    margin-top: 36px;
   }
   .section {
     padding: 44px 0;
@@ -906,6 +908,11 @@ main {
   }
   .filter-panel label {
     font-size: 0.875rem;
+  }
+  .button,
+  .text-link,
+  .reset-button {
+    min-height: var(--control-height);
   }
   .detail-grid {
     display: block;
