@@ -210,10 +210,13 @@ main {
 }
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(290px, 0.65fr);
-  gap: 72px;
-  align-items: end;
+  grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+  gap: 64px;
+  align-items: center;
   padding: 88px 0 76px;
+}
+.hero-copy-block {
+  max-width: 720px;
 }
 .hero h1 {
   max-width: 760px;
@@ -234,10 +237,18 @@ main {
 .hero-note p {
   margin: 0 0 10px;
 }
-.hero-note p:last-child {
+.hero-note strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.15rem;
+}
+.hero-note p:last-of-type {
   margin: 0;
   color: var(--fg-muted);
   font-size: 0.94rem;
+}
+.hero-note .hero-actions {
+  margin-top: 20px;
 }
 .hero-actions {
   display: flex;
@@ -523,13 +534,17 @@ main {
 }
 .filter-panel {
   display: grid;
-  grid-template-columns: minmax(220px, 1.6fr) repeat(4, minmax(120px, 0.7fr)) auto;
-  gap: 10px;
-  align-items: end;
-  padding: 16px;
+  gap: 16px;
+  padding: 20px;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-control);
   background: var(--bg-muted);
+}
+.filter-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+  gap: 10px;
+  align-items: end;
 }
 .filter-panel label {
   display: grid;
@@ -829,8 +844,14 @@ main {
     font-size: 0.8rem;
   }
   .hero {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 36px;
     padding: 56px 0 48px;
+  }
+  .hero-note {
+    order: 2;
   }
   .hero h1 {
     font-size: clamp(3.4rem, 16vw, 5.8rem);
@@ -875,7 +896,7 @@ main {
   .toolbar select {
     width: 100%;
   }
-  .filter-panel {
+  .filter-options {
     grid-template-columns: 1fr;
   }
   .filter-panel select,
