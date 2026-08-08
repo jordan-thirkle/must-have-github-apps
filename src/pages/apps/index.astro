@@ -94,6 +94,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
         control.value = control.id === 'filter-sort' ? 'recommended' : '';
       });
       apply();
+      search?.focus();
     };
     const apply = () => {
       const query = search?.value.trim().toLowerCase() || '';
@@ -125,7 +126,11 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
               : 0,
         )
         .forEach((card) => grid?.append(card));
-      if (count) count.textContent = `Showing ${visible.length} of ${cards.length} reviewed tools.`;
+      if (count)
+        count.textContent =
+          visible.length === cards.length
+            ? `Showing all ${cards.length} reviewed tools.`
+            : `Showing ${visible.length} of ${cards.length} reviewed tools.`;
       if (empty) empty.hidden = visible.length > 0;
     };
     search?.addEventListener('input', apply);
