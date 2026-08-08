@@ -110,9 +110,12 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
           (!category || card.dataset.category?.split(' ').includes(category)) &&
           (!type || card.dataset.entryType === type) &&
           (!setup || card.dataset.setup === setup);
+        const wasHidden = card.hidden;
         card.hidden = !matches;
-        card.classList.toggle('motion-enter', matches);
-        if (matches) requestAnimationFrame(() => card.classList.remove('motion-enter'));
+        if (matches && wasHidden) {
+          card.classList.add('motion-enter');
+          requestAnimationFrame(() => card.classList.remove('motion-enter'));
+        }
         return matches;
       });
       [...cards]
@@ -126,11 +129,14 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
               : 0,
         )
         .forEach((card) => grid?.append(card));
-      if (count)
+      if (count) {
         count.textContent =
           visible.length === cards.length
             ? `Showing all ${cards.length} reviewed tools.`
             : `Showing ${visible.length} of ${cards.length} reviewed tools.`;
+        count.classList.remove('motion-update');
+        requestAnimationFrame(() => count.classList.add('motion-update'));
+      }
       if (empty) empty.hidden = visible.length > 0;
     };
     search?.addEventListener('input', apply);
