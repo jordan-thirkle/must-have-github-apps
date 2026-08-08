@@ -60,7 +60,26 @@ const schema = {
   <JsonLd data={schema} />
   <section class="container section">
     <div class="toolbar mono">
-      <span>{apps.length} reviewed entries</span><a href="/apps/">Browse all →</a>
-    </div><div class="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
+      <span>{apps.length} reviewed {apps.length === 1 ? 'entry' : 'entries'}</span><a href="/apps/"
+        >Browse all →</a
+      >
+    </div>
+    {
+      apps.length > 0 ? (
+        <div class="app-grid">
+          {apps.map((app) => (
+            <AppCard app={app.data} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <strong>No reviewed tools in this category yet.</strong>
+          <span>Browse the full directory or suggest a tool for this category.</span>
+          <a class="button secondary" href="/apps/">
+            Browse all tools
+          </a>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>

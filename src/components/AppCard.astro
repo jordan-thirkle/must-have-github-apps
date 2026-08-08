@@ -38,7 +38,7 @@ const review = reviewState(app.reviewedAt, app.nextReviewAt);
           <span aria-hidden="true">★</span> {formatStars(app.githubRepository.stars)} stars
         </span>
       ) : (
-        <span>Last checked {review.lastChecked}</span>
+        <span>Reviewed {review.lastChecked}</span>
       )
     }
   </div>
