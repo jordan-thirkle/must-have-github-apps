@@ -24,39 +24,31 @@ const schema = {
 
 <BaseLayout
   title="Must-Have GitHub Apps | Security, Automation, and Developer Tools"
-  description="A security-first directory of GitHub Apps, integrations, Actions, and developer tools, reviewed for permissions, setup, pricing, privacy, and trade-offs."
+  description="A public GitHub Apps directory for security tools, Actions, integrations, and repository automation, with clear access, cost, and upkeep notes."
 >
   <JsonLd data={schema} />
-  <section class="container hero">
+  <section class="container hero hero-centered">
     <div class="hero-copy-block">
-      <p class="eyebrow">GitHub tools, compared clearly</p>
-      <h1 class="display">Find the tools your repository is missing.</h1>
+      <p class="eyebrow">A GitHub Apps directory, built in public</p>
+      <h1 class="display">Find the tools your repository needs.</h1>
       <p class="hero-copy">
-        Security scanners, dependency updates, review checks, and automation, compared by access,
-        upkeep, and evidence.
-      </p>
-    </div>
-    <aside class="hero-note">
-      <p class="eyebrow">Choose your next step</p>
-      <strong>Start with the risk in front of you.</strong>
-      <p>
-        Use the baseline for a new repository, or browse the directory when you already know the
-        gap.
+        Compare GitHub Apps, Actions, security tools, and integrations by access, cost, and upkeep.
       </p>
       <div class="hero-actions">
-        <a class="button" href="/collections/">Open the baseline <Icon name="arrow" size={15} /></a>
-        <a class="text-link" href="/apps/">Browse all tools</a>
+        <a class="button" href="/apps/">Browse the directory <Icon name="arrow" size={15} /></a>
+        <a class="button secondary" href="/collections/">Start with the baseline</a>
       </div>
-    </aside>
+      <p class="hero-proof">Reviewed records, dated sources, and clear permission notes.</p>
+    </div>
   </section>
 
   <section class="container section rule" aria-labelledby="start-heading">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Browse by job</p>
-        <h2 id="start-heading" class="display">Start with the gap, not the vendor.</h2>
+        <p class="eyebrow">Browse by problem</p>
+        <h2 id="start-heading" class="display">Choose what you need to fix.</h2>
       </div>
-      <p>Choose one problem. See the tools, permissions, and trade-offs in one place.</p>
+      <p>Pick a problem to see the relevant tools.</p>
     </div>
     <div class="category-list">
       {
@@ -81,8 +73,8 @@ const schema = {
   <section class="container section" aria-labelledby="featured-heading">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Reviewed entries</p>
-        <h2 id="featured-heading" class="display">A short list to get moving.</h2>
+        <p class="eyebrow">Recently reviewed</p>
+        <h2 id="featured-heading" class="display">What’s in the directory now.</h2>
       </div>
       <div class="section-actions">
         <a class="text-link" href="/apps/">View all apps <Icon name="arrow" size={15} /></a><a
@@ -99,9 +91,8 @@ const schema = {
   <section class="container section">
     <div class="callout">
       <div>
-        <h2 class="display">Most repositories start without a security baseline.</h2><p>
-          Use the checklist, then add only what your project can maintain.
-        </p>
+        <p class="eyebrow">New repository?</p>
+        <h2 class="display">Start with the security baseline.</h2>
       </div>
       <a class="text-link" href="/collections/new-repository-baseline/"
         >Open the baseline <Icon name="arrow" size={15} /></a
