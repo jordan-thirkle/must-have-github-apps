@@ -108,6 +108,8 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
           (!type || card.dataset.entryType === type) &&
           (!setup || card.dataset.setup === setup);
         card.hidden = !matches;
+        card.classList.toggle('motion-enter', matches);
+        if (matches) requestAnimationFrame(() => card.classList.remove('motion-enter'));
         return matches;
       });
       [...cards]
