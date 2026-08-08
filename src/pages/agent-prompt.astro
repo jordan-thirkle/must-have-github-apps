@@ -1,0 +1,183 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { jobs, tools } from '@/data/agent-prompt-catalog';
+
+const presetTools = (Astro.url.searchParams.get('tools') || '')
+  .split(',')
+  .filter((id) => tools.some((tool) => tool.id === id));
+---
+
+<BaseLayout
+  title="Copy a prompt for your coding agent | Must-Have GitHub Apps"
+  description="Create a privacy-first prompt for a coding agent to review GitHub Apps and repository needs."
+>
+  <section class="container page-intro prompt-intro">
+    <p class="eyebrow">Privacy-first utility</p>
+    <h1 class="display">Copy a prompt for your coding agent.</h1>
+    <p>Choose a task, add optional context, and paste the result into any coding agent.</p>
+    <p class="privacy-banner">
+      <strong>Runs in your browser.</strong> We do not access your repository, send prompt text to an
+      API, or store what you enter.
+    </p>
+  </section>
+  <section class="container prompt-builder" aria-label="Coding agent prompt builder">
+    <form class="prompt-form" id="prompt-form">
+      <fieldset>
+        <legend>What should the agent do?</legend>
+        {
+          jobs.map((job) => (
+            <label class="prompt-option">
+              <>
+                <input type="radio" name="job" value={job.id} />
+                <span>
+                  <>
+                    <strong>{job.label}</strong>
+                    <small>{job.description}</small>
+                  </>
+                </span>
+              </>
+            </label>
+          ))
+        }
+      </fieldset>
+      <fieldset>
+        <legend>Which tools are relevant?</legend>
+        <p class="field-help">Optional. Select only tools you want the agent to consider.</p>
+        {
+          tools.map((tool) => (
+            <label class="prompt-option">
+              <>
+                <input
+                  type="checkbox"
+                  name="tool"
+                  value={tool.id}
+                  checked={presetTools.includes(tool.id)}
+                />
+                <span>
+                  <>
+                    <strong>{tool.label}</strong>
+                    <small>{tool.note}</small>
+                  </>
+                </span>
+              </>
+            </label>
+          ))
+        }
+      </fieldset>
+      <details>
+        <summary>Optional repository context</summary>
+        <p id="context-help" class="field-help">
+          Do not paste passwords, tokens, private keys, or sensitive customer data.
+        </p>
+        <label for="project">Project name</label><input
+          id="project"
+          maxlength="120"
+          autocomplete="off"
+        />
+        <label for="branch">Branch or target area</label><input
+          id="branch"
+          maxlength="120"
+          autocomplete="off"
+        />
+        <label for="context">What should the agent know?</label><textarea
+          id="context"
+          maxlength="4000"
+          rows="7"
+          aria-describedby="context-help"></textarea>
+        <p id="secret-warning" class="warning" role="alert" hidden>
+          This text looks like it may contain a secret. Review it and remove sensitive values before
+          copying.
+        </p>
+      </details>
+      <button class="button secondary" id="reset-prompt" type="button">Start over</button>
+    </form>
+    <section class="prompt-preview" aria-labelledby="preview-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Portable Markdown</p><h2 id="preview-heading" class="display">
+            Preview
+          </h2>
+        </div><span id="prompt-count" class="mono" aria-live="polite"></span>
+      </div>
+      <textarea id="generated-prompt" readonly aria-describedby="preview-help"></textarea>
+      <p id="preview-help" class="field-help">
+        Review the prompt, then copy or download it for your coding agent.
+      </p>
+      <div class="prompt-actions">
+        <button class="button" id="copy-prompt" type="button">Copy prompt</button><button
+          class="button secondary"
+          id="download-prompt"
+          type="button">Download Markdown</button
+        ><button class="button secondary" id="share-prompt" type="button" hidden
+          >Share prompt</button
+        >
+      </div>
+      <p id="action-status" role="status" aria-live="polite"></p>
+    </section>
+  </section>
+  <script>
+    import { generatePrompt, hasSecretLikeText } from '@/lib/agent-prompt/generate';
+    import type { PromptState, JobId, ToolId } from '@/data/agent-prompt-catalog';
+    const form = document.querySelector<HTMLFormElement>('#prompt-form');
+    const preview = document.querySelector<HTMLTextAreaElement>('#generated-prompt');
+    const count = document.querySelector<HTMLElement>('#prompt-count');
+    const warning = document.querySelector<HTMLElement>('#secret-warning');
+    const status = document.querySelector<HTMLElement>('#action-status');
+    const readState = (): PromptState => ({
+      jobId: (form?.querySelector<HTMLInputElement>('input[name="job"]:checked')?.value || '') as
+        JobId | '',
+      toolIds: [
+        ...(form?.querySelectorAll<HTMLInputElement>('input[name="tool"]:checked') || []),
+      ].map((input) => input.value as ToolId),
+      project: document.querySelector<HTMLInputElement>('#project')?.value || '',
+      branch: document.querySelector<HTMLInputElement>('#branch')?.value || '',
+      context: document.querySelector<HTMLTextAreaElement>('#context')?.value || '',
+    });
+    const update = () => {
+      const state = readState();
+      const prompt = generatePrompt(state);
+      if (preview) preview.value = prompt;
+      if (count) count.textContent = `${prompt.length.toLocaleString()} characters`;
+      if (warning)
+        warning.hidden = !hasSecretLikeText(`${state.project}\n${state.branch}\n${state.context}`);
+    };
+    const getPrompt = () => preview?.value || '';
+    const copy = async () => {
+      const prompt = getPrompt();
+      try {
+        await navigator.clipboard.writeText(prompt);
+        if (status) status.textContent = 'Prompt copied. Paste it into your coding agent.';
+      } catch {
+        preview?.focus();
+        if (status)
+          status.textContent = 'Copy was blocked. Select the preview and copy it manually.';
+      }
+    };
+    form?.addEventListener('input', update);
+    form?.addEventListener('change', update);
+    document.querySelector('#reset-prompt')?.addEventListener('click', () => {
+      form?.reset();
+      update();
+      form?.querySelector<HTMLInputElement>('input[name="job"]')?.focus();
+    });
+    document.querySelector('#copy-prompt')?.addEventListener('click', copy);
+    document.querySelector('#download-prompt')?.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(
+        new Blob([getPrompt()], { type: 'text/markdown;charset=utf-8' }),
+      );
+      link.download = 'coding-agent-prompt.md';
+      link.click();
+      URL.revokeObjectURL(link.href);
+      if (status) status.textContent = 'Markdown downloaded.';
+    });
+    const share = document.querySelector<HTMLButtonElement>('#share-prompt');
+    if (share && 'share' in navigator) {
+      share.hidden = false;
+      share.addEventListener('click', async () => {
+        await navigator.share({ title: 'Coding agent prompt', text: getPrompt() });
+      });
+    }
+    update();
+  </script>
+</BaseLayout>

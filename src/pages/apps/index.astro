@@ -7,6 +7,7 @@ import { entryTypeLabel, getApps, getCategories } from '@/lib/directory';
 const apps = await getApps();
 const categories = await getCategories();
 const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
+const initialQuery = Astro.url.searchParams.get('q')?.trim() || '';
 ---
 
 <BaseLayout
@@ -21,6 +22,12 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     </p>
   </section>
   <section class="container section">
+    <div class="toolbar prompt-entry">
+      <span>Want an agent to review your repository?</span><a
+        class="text-link"
+        href="/agent-prompt/">Copy a prompt</a
+      >
+    </div>
     <form class="filter-panel" id="filter-form" aria-labelledby="filter-heading">
       <h2 id="filter-heading" class="sr-only">Filter the directory</h2>
       <div class="filter-search">
@@ -29,6 +36,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
             id="app-search"
             type="search"
             placeholder="Search by tool, job, or vendor"
+            value={initialQuery}
             autocomplete="off"
           />
         </div>
@@ -88,6 +96,7 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     const cards = [...document.querySelectorAll<HTMLElement>('[data-app-card]')];
     const count = document.querySelector<HTMLElement>('#app-count');
     const empty = document.querySelector<HTMLElement>('#app-empty');
+    const setupOrder = { low: 0, medium: 1, high: 2 };
     const reset = () => {
       if (search) search.value = '';
       controls.forEach((control) => {
@@ -125,7 +134,8 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
                 b.querySelector('h3')?.textContent || '',
               )
             : sort === 'setup'
-              ? (a.dataset.setup || '').localeCompare(b.dataset.setup || '')
+              ? (setupOrder[a.dataset.setup as keyof typeof setupOrder] ?? 99) -
+                (setupOrder[b.dataset.setup as keyof typeof setupOrder] ?? 99)
               : 0,
         )
         .forEach((card) => grid?.append(card));

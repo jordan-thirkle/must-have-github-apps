@@ -1,0 +1,38 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy | Must-Have GitHub Apps"
+  description="How this directory handles website analytics and coding-agent prompt data."
+>
+  <section class="container page-intro">
+    <p class="eyebrow">Privacy</p>
+    <h1 class="display">Simple by default.</h1>
+    <p>This site does not access your repositories or send your prompt text anywhere.</p>
+  </section>
+  <article class="container detail-content">
+    <h2>Website analytics</h2>
+    <p>
+      When configured, this site uses Umami for aggregate website traffic such as page views and
+      broad trends. It does not receive repository context or generated prompts.
+    </p>
+    <h2>Agent prompts</h2>
+    <p>
+      The prompt builder runs in your browser. Your project name, branch, notes, and generated
+      prompt are not uploaded, stored, or placed in the URL.
+    </p>
+    <h2>What you should not paste</h2>
+    <p>
+      Never paste passwords, API keys, tokens, private keys, customer data, or other sensitive
+      information into a prompt.
+    </p>
+    <h2>Questions</h2>
+    <p>
+      For questions about this project, use the <a
+        href="https://github.com/jordan-thirkle/must-have-github-apps/issues"
+        >public repository issues</a
+      >.
+    </p>
+  </article>
+</BaseLayout>

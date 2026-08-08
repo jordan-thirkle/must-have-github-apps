@@ -13,10 +13,10 @@ export async function getStaticPaths() {
 }
 
 const { collection } = Astro.props;
-const apps = await getCollection(
-  'apps',
-  ({ data }) => data.status === 'active' && collection.apps.includes(data.slug),
-);
+const allApps = await getCollection('apps');
+const apps = collection.apps
+  .map((slug) => allApps.find(({ data }) => data.status === 'active' && data.slug === slug))
+  .filter((app): app is (typeof allApps)[number] => Boolean(app));
 ---
 
 <BaseLayout
