@@ -59,9 +59,9 @@ const schema = {
     </div>
     <div class="category-list">
       {
-        categories.map((category, index) => (
+        categories.map((category) => (
           <a class="category-row" href={categoryPath(category.data.slug)}>
-            <span class="category-number mono">{String(index + 1).padStart(2, '0')}</span>
+            <span class="category-number mono">{String(category.data.order).padStart(2, '0')}</span>
             <span>
               <>
                 <h3>{category.data.name}</h3>

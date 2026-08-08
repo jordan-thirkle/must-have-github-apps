@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+@import 'https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap';
 
 :root {
   color-scheme: light;
@@ -747,7 +747,7 @@ main {
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
@@ -857,6 +857,10 @@ main {
   .filter-panel select,
   .search-input {
     width: 100%;
+    font-size: 1rem;
+  }
+  .filter-panel label {
+    font-size: 0.875rem;
   }
   .detail-grid {
     display: block;

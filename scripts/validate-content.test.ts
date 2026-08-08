@@ -14,3 +14,11 @@ test('canonical app records have evidence and review metadata', async () => {
     assert.ok(Array.isArray(frontmatter.sources));
   }
 });
+
+test('app records preserve every category for directory filtering', async () => {
+  const files = await readAppFiles();
+  for (const { frontmatter } of files) {
+    assert.ok(Array.isArray(frontmatter.categories));
+    assert.ok(frontmatter.categories.length > 0);
+  }
+});
