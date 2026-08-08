@@ -1,0 +1,119 @@
+language: en-GB
+tone_instructions: 'Use plain English. Be concise, specific, respectful, security-aware, and user-focused. Explain technical terms when needed. Avoid praise without evidence and avoid cosmetic changes.'
+reviews:
+  profile: chill
+  request_changes_workflow: true
+  high_level_summary: true
+  high_level_summary_in_walkthrough: false
+  review_status: true
+  review_details: true
+  review_progress: true
+  commit_status: true
+  fail_commit_status: true
+  collapse_walkthrough: true
+  changed_files_summary: true
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  assess_linked_issues: true
+  related_issues: false
+  related_prs: false
+  suggested_labels: true
+  auto_apply_labels: false
+  suggested_reviewers: false
+  in_progress_fortune: false
+  poem: false
+  enable_prompt_for_ai_agents: false
+  path_filters:
+    - '!dist/**'
+    - '!.astro/**'
+    - '!node_modules/**'
+  path_instructions:
+    - path: 'src/pages/**/*.astro'
+      instructions: >-
+        Check plain language, one clear H1, semantic landmarks, keyboard access, visible focus,
+        labelled controls, heading order, canonical metadata, structured data accuracy, and no
+        redundant sections or unsupported claims.
+    - path: 'src/components/**/*.astro'
+      instructions: >-
+        Check accessible names, keyboard behavior, 44px touch targets where practical, reduced
+        motion, responsive behavior, and safe semantic HTML. Do not introduce nested links.
+    - path: 'src/content/**/*.md'
+      instructions: >-
+        Check that claims are sourced, dates are present, permissions and privacy are explicit,
+        entry types are accurate, unknown facts remain unknown, and copy is understandable to a
+        non-developer.
+    - path: '.github/workflows/**'
+      instructions: >-
+        Check least-privilege permissions, untrusted pull request safety, pinned or maintained
+        actions, secrets handling, timeouts, concurrency, and whether the workflow can fail safely.
+    - path: 'scripts/**'
+      instructions: >-
+        Check deterministic behavior, safe handling of external failures, idempotence, useful
+        error messages, and tests for boundary cases.
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    auto_pause_after_reviewed_commits: 5
+    drafts: false
+chat:
+  art: false
+  auto_reply: false
+knowledge_base:
+  opt_out: true
+  web_search:
+    enabled: false
+  code_guidelines:
+    enabled: true
+  learnings:
+    scope: local
+    approval_delay: 7
+  pull_requests:
+    scope: local
+  mcp:
+    usage: disabled
+finishing_touches:
+  docstrings:
+    enabled: false
+  unit_tests:
+    enabled: false
+  simplify:
+    enabled: false
+  autofix:
+    enabled: false
+  fix_ci:
+    enabled: false
+  resolve_merge_conflict:
+    enabled: false
+pre_merge_checks:
+  override_requested_reviewers_only: true
+  title:
+    mode: warning
+    requirements: 'Use a clear Conventional Commit title under 72 characters.'
+  description:
+    mode: warning
+  custom_checks:
+    - name: Content evidence
+      mode: error
+      instructions: >-
+        For changes to src/content/** or public claims, require dated official sources, explicit
+        permissions/data access, pricing/privacy treatment, limitations, and a next review date.
+    - name: Accessibility intent
+      mode: error
+      instructions: >-
+        For user-facing changes, require semantic HTML, labelled controls, keyboard access, visible
+        focus, responsive behavior, and no important content that depends on hover or JavaScript.
+tools:
+  markdownlint:
+    enabled: true
+  actionlint:
+    enabled: true
+  zizmor:
+    enabled: true
+  gitleaks:
+    enabled: true
+  trufflehog:
+    enabled: true
+  checkov:
+    enabled: true
+  semgrep:
+    enabled: true

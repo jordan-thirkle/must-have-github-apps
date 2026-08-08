@@ -1,0 +1,50 @@
+name: Directory freshness
+
+on:
+  schedule:
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check content freshness
+        run: npm run freshness > freshness.json
+      - name: Check source links
+        run: npm run links > links.json
+        continue-on-error: true
+      - name: Upload health report
+        uses: actions/upload-artifact@v4 # v4
+        with:
+          name: directory-health
+          path: '{freshness.json,links.json}'
+      - name: Open or update maintenance issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create maintenance --color B60205 --description 'Directory freshness and source maintenance' --force
+          body="$(cat freshness.json; printf '\n'; cat links.json)"
+          issue_body=$(printf '```json\n%s\n```' "$body")
+          issue_number="$(gh issue list --state open --label maintenance --search 'in:title Directory health' --json number --jq '.[0].number')"
+          if [ -n "$issue_number" ]; then
+            gh issue edit "$issue_number" --body "$issue_body"
+          else
+            gh issue create --title "Directory health requires review" --label maintenance --body "$issue_body"
+          fi

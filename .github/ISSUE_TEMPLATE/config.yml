@@ -6,3 +6,6 @@ contact_links:
   - name: GitHub documentation
     url: https://docs.github.com/en/apps
     about: Read GitHub's official Apps documentation.
+  - name: Browse the live directory
+    url: https://must-have-github-apps.vercel.app/
+    about: Read the reviewed directory and its evidence before suggesting a duplicate entry.

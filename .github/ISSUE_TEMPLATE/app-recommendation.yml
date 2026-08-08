@@ -1,6 +1,6 @@
 name: App recommendation
 description: Suggest a GitHub App or integration for the directory.
-title: "[App] "
+title: '[App] '
 labels:
   - recommendation
 body:
@@ -11,11 +11,44 @@ body:
       placeholder: Example App
     validations:
       required: true
+  - type: dropdown
+    id: entry_type
+    attributes:
+      label: Entry type
+      options:
+        - GitHub App
+        - Marketplace app
+        - GitHub Action
+        - Integration
+        - Native GitHub feature
+        - Platform
+    validations:
+      required: true
+  - type: input
+    id: installation_model
+    attributes:
+      label: Installation model
+      description: For example, GitHub App, GitHub Action, OAuth, webhook, configuration file, CLI, or self-hosted service.
+    validations:
+      required: true
   - type: input
     id: url
     attributes:
       label: Official URL
       description: Link to the official product or GitHub Marketplace listing.
+    validations:
+      required: true
+  - type: input
+    id: documentation_url
+    attributes:
+      label: Documentation URL
+    validations:
+      required: true
+  - type: input
+    id: privacy_url
+    attributes:
+      label: Privacy policy URL
+      description: Include the official privacy or data-retention documentation.
     validations:
       required: true
   - type: textarea

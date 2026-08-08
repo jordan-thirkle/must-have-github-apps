@@ -1,75 +1,44 @@
 # Must-Have GitHub Apps
 
-A practical, security-first directory of GitHub Apps, integrations, and developer tools worth installing.
+A plain-language directory of GitHub Apps, GitHub Actions, security tools, integrations, and developer tools.
 
-Many developers — especially people building quickly with AI or “vibe coding” — discover GitHub Apps only after something goes wrong. Security scanners, dependency alerts, code quality checks, CI helpers, release tools, and project automations can remove a huge amount of stress before problems become emergencies.
+**Website:** [must-have-github-apps.vercel.app](https://must-have-github-apps.vercel.app/)
 
-This project exists to make that discovery happen earlier.
+Use this directory to find tools for:
 
-## Start here
+- GitHub security and secret scanning
+- dependency updates and vulnerability alerts
+- code review and static analysis
+- testing, CI/CD, and releases
+- issues, pull requests, and repository automation
+- monitoring and error tracking
+- documentation and developer productivity
 
-If you have never explored GitHub Apps before, begin with these categories:
+Each listing explains what the tool does, who it may help, what it can access, setup effort, pricing, privacy, limitations, alternatives, official sources, and the date it was last checked.
 
-1. **Security scanners** — find vulnerable dependencies, leaked secrets, insecure patterns, and risky configuration.
-2. **Dependency management** — keep packages and system dependencies updated with less manual work.
-3. **Code quality** — catch bugs, maintainability issues, and review gaps before merge.
-4. **CI/CD** — test and build every change consistently.
-5. **Repository automation** — reduce repetitive project maintenance.
-6. **Monitoring and reliability** — know when a release or integration breaks.
+## Start with a problem
 
-You do not need to install everything. Start with the tools that protect the risks you are most likely to miss, understand their permissions, and add more only when the benefit is clear.
+- [Security tools](https://must-have-github-apps.vercel.app/categories/security/)
+- [Dependency tools](https://must-have-github-apps.vercel.app/categories/dependencies/)
+- [Code review and analysis](https://must-have-github-apps.vercel.app/categories/code-review/)
+- [Testing and CI/CD](https://must-have-github-apps.vercel.app/categories/ci-cd/)
+- [Repository automation](https://must-have-github-apps.vercel.app/categories/automation/)
+- [Observability and reliability](https://must-have-github-apps.vercel.app/categories/observability/)
+- [Developer productivity](https://must-have-github-apps.vercel.app/categories/productivity/)
 
-## What belongs here
+Browse the [GitHub Apps directory](https://must-have-github-apps.vercel.app/apps/) or follow the [new project security baseline](https://must-have-github-apps.vercel.app/collections/new-repository-baseline/).
 
-Recommendations should help a real GitHub repository become safer, more reliable, easier to maintain, or easier to ship. Each entry should explain:
+## How listings are checked
 
-- what problem it solves;
-- who should use it;
-- what it can access or change;
-- how much setup and maintenance it adds;
-- whether it has a free tier or open-source option;
-- useful limitations, trade-offs, and alternatives.
+The site uses automated checks for links, content, formatting, builds, and security. A person checks product facts before they change. AI tools may suggest improvements, but they do not replace review.
 
-Security and privacy come before popularity. A tool should never be recommended only because it is fashionable or heavily marketed.
-
-## Planned directory
-
-The directory will be organised by job rather than by vendor:
-
-- Security and secret scanning
-- Dependency and supply-chain security
-- Code review and static analysis
-- Testing and CI/CD
-- Releases and versioning
-- Documentation and project management
-- Issue and pull request automation
-- Monitoring, error tracking, and observability
-- Developer productivity
-- GitHub Marketplace essentials
-
-## Why this exists
-
-GitHub is more than a place to store source code. It can continuously check changes, protect credentials, update dependencies, enforce review standards, and automate the boring parts of software delivery.
-
-The goal is not to create another noisy list of every possible integration. The goal is to help someone go from:
-
-> “I had no idea GitHub could do that.”
-
-to:
-
-> “My repository is protected, checked, and easier to maintain.”
+A listing is not a security audit or an endorsement. A passing scan is useful evidence, not proof that a project is safe. If a fact cannot be checked, it is marked as unknown.
 
 ## Contributing
 
-Contributions are welcome, especially firsthand setup notes and honest comparisons. Please include official documentation, current pricing or plan limits where relevant, required permissions, and any meaningful trade-offs.
+Suggest a tool or report an outdated fact through the [GitHub repository](https://github.com/jordan-thirkle/must-have-github-apps). Include official documentation, permissions, pricing, privacy information, limitations, and the date you checked the source.
 
-Do not submit unverified security claims, undisclosed affiliate links, or tools that require excessive access without explaining why.
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the review standard.
-
-## Scope
-
-This is an independent directory, not an official GitHub project. GitHub and GitHub Marketplace are trademarks of GitHub, Inc. Product names belong to their respective owners.
+This is an independent project by [Jordan Thirkle](https://www.byjtt.com). It is not affiliated with or endorsed by GitHub. GitHub and GitHub Marketplace are trademarks of GitHub, Inc.
 
 ## License
 

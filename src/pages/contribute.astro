@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contribute to the GitHub Apps Directory"
+  description="Suggest a GitHub App or report outdated permissions, pricing, privacy, or documentation in the Must-Have GitHub Apps directory."
+>
+  <section class="container page-intro">
+    <p class="eyebrow mono">Keep the map useful</p><h1 class="display">
+      Recommend evidence, not hype.
+    </h1><p>
+      The directory stays current through focused contributions with official sources and clear
+      limitations.
+    </p>
+  </section>
+  <section class="container detail-content">
+    <h2>Suggest an entry</h2><p>
+      <a
+        class="button"
+        href="https://github.com/jordan-thirkle/must-have-github-apps/issues/new?template=app-recommendation.yml"
+        >Open recommendation form</a
+      >
+    </p><p>
+      Include the product type, installation model, problem solved, permissions, data access, setup,
+      pricing, privacy, alternatives, and official documentation.
+    </p>
+    <h2>Correct an entry</h2><p>
+      <a
+        class="button secondary"
+        href="https://github.com/jordan-thirkle/must-have-github-apps/issues/new?template=directory-maintenance.yml"
+        >Report outdated information</a
+      >
+    </p><p>
+      Point to the exact field, explain what changed, and include a dated official source whenever
+      possible.
+    </p>
+    <h2>Review standard</h2><p>
+      We prefer a smaller directory with traceable facts over a giant list of unverified claims.
+      Read <a
+        href="https://github.com/jordan-thirkle/must-have-github-apps/blob/main/CONTRIBUTING.md"
+        >the contribution guide</a
+      > before submitting.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,40 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { categoryPath, getCategories } from '@/lib/directory';
+
+const categories = await getCategories();
+---
+
+<BaseLayout
+  title="GitHub Apps by Category | Must-Have GitHub Apps"
+  description="Browse GitHub Apps and developer tools by security, dependencies, code review, CI/CD, automation, observability, and productivity."
+>
+  <section class="container page-intro">
+    <p class="eyebrow mono">Browse by job</p>
+    <h1 class="display">Start with the problem, not the vendor.</h1>
+    <p>
+      Each category explains what to look for, what the access model means, and which reviewed
+      entries may fit the job.
+    </p>
+  </section>
+  <section class="container section">
+    <div class="category-list">
+      {
+        categories.map((category) => (
+          <a class="category-row" href={categoryPath(category.data.slug)}>
+            <span class="category-number mono">{String(category.data.order).padStart(2, '0')}</span>
+            <span>
+              <>
+                <h3>{category.data.name}</h3>
+                <p>{category.data.description}</p>
+              </>
+            </span>
+            <span class="category-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

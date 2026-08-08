@@ -1,0 +1,34 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { collections } from '@/lib/directory';
+---
+
+<BaseLayout
+  title="GitHub App Collections | Must-Have GitHub Apps"
+  description="Curated GitHub tool collections for security, dependency maintenance, and repository automation."
+>
+  <section class="container page-intro">
+    <p class="eyebrow">Collections</p><h1 class="display">
+      Choose a group of tools for one task.
+    </h1><p>Each collection is a short, reviewed path through the directory.</p>
+  </section>
+  <section class="container section">
+    <div class="collection-list">
+      {
+        collections.map((collection) => (
+          <a class="collection-row" href={`/collections/${collection.slug}/`}>
+            <>
+              <span>
+                <>
+                  <h2>{collection.title}</h2>
+                  <p>{collection.description}</p>
+                </>
+              </span>
+              <span aria-hidden="true">→</span>
+            </>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

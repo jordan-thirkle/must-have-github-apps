@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { entryTypeLabel, formatDate } from '@/lib/directory';
+
+export async function getStaticPaths() {
+  return [{ params: { pair: 'dependabot-vs-codeql' } }];
+}
+
+const allApps = await getCollection('apps');
+const first = allApps.find(({ data }) => data.slug === 'dependabot');
+const second = allApps.find(({ data }) => data.slug === 'codeql');
+if (!first || !second) throw new Error('Comparison records are missing');
+const rows = [
+  ['Type', entryTypeLabel(first.data.entryType), entryTypeLabel(second.data.entryType)],
+  ['Primary job', first.data.categories.join(', '), second.data.categories.join(', ')],
+  [
+    'Installation',
+    first.data.installationModels.join(', '),
+    second.data.installationModels.join(', '),
+  ],
+  ['Setup', first.data.setupLevel, second.data.setupLevel],
+  ['Maintenance', first.data.maintenanceLevel, second.data.maintenanceLevel],
+  ['Free option', first.data.freeTier ? 'Yes' : 'No', second.data.freeTier ? 'Yes' : 'No'],
+  ['Data leaves GitHub', first.data.dataLeavesGitHub, second.data.dataLeavesGitHub],
+  ['Last reviewed', formatDate(first.data.reviewedAt), formatDate(second.data.reviewedAt)],
+];
+---
+
+<BaseLayout
+  title="Dependabot vs CodeQL | Must-Have GitHub Apps"
+  description="Compare Dependabot and CodeQL by job, installation, setup, upkeep, access, and review date."
+>
+  <div class="container">
+    <Breadcrumbs items={[{ label: 'Compare' }, { label: 'Dependabot vs CodeQL' }]} />
+  </div>
+  <section class="container page-intro">
+    <p class="eyebrow">Comparison</p><h1 class="display">Dependabot vs CodeQL</h1><p>
+      These tools solve different problems. Use this table to decide which gap to close first, not
+      to treat them as substitutes.
+    </p>
+  </section>
+  <section class="container section">
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <caption>Dependabot and CodeQL comparison</caption>
+        <thead
+          ><tr
+            ><th scope="col">Dimension</th><th scope="col"
+              ><a href="/apps/dependabot/">Dependabot</a></th
+            ><th scope="col"><a href="/apps/codeql/">CodeQL</a></th></tr
+          ></thead
+        ><tbody
+          >{
+            rows.map(([label, left, right]) => (
+              <tr>
+                <>
+                  <th scope="row">{label}</th>
+                  <td>{left}</td>
+                  <td>{right}</td>
+                </>
+              </tr>
+            ))
+          }</tbody
+        >
+      </table>
+    </div>
+  </section>
+  <section class="container collection-prose">
+    <h2>How to choose</h2><p>
+      Start with Dependabot when dependency age or vulnerability alerts are the immediate gap. Start
+      with CodeQL when supported source code needs deeper security analysis. Many repositories
+      eventually use both, with separate owners and review paths.
+    </p>
+  </section>
+</BaseLayout>

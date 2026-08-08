@@ -1,0 +1,35 @@
+{
+  "name": "must-have-github-apps",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "tsx scripts/validate-content.ts",
+    "freshness": "tsx scripts/check-freshness.ts",
+    "links": "tsx scripts/check-links.ts",
+    "refresh:github": "tsx scripts/update-repository-metadata.ts",
+    "format:check": "prettier --check .",
+    "test": "tsx --test scripts/*.test.ts"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.1.6",
+    "gray-matter": "4.0.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
