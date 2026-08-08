@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import AppCard from '@/components/AppCard.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { collections } from '@/lib/directory';
+
+export async function getStaticPaths() {
+  return collections.map((collection) => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
+}
+
+const { collection } = Astro.props;
+const apps = await getCollection(
+  'apps',
+  ({ data }) => data.status === 'active' && collection.apps.includes(data.slug),
+);
+---
+
+<BaseLayout
+  title={`${collection.title} | Must-Have GitHub Apps`}
+  description={collection.description}
+>
+  <div class="container">
+    <Breadcrumbs
+      items={[{ label: 'Collections', href: '/collections/' }, { label: collection.title }]}
+    />
+  </div>
+  <section class="container page-intro">
+    <p class="eyebrow">Collection</p><h1 class="display">{collection.title}</h1><p>
+      {collection.description}
+    </p>
+  </section>
+  <section class="container collection-prose">
+    <h2>Use this order</h2><ol>
+      <li>Protect credentials with secret scanning and a rotation path.</li><li>
+        Turn on dependency visibility and reviewable update pull requests.
+      </li><li>Add code analysis when your languages and checks can support it.</li><li>
+        Review every write permission before enabling automatic merges.
+      </li>
+    </ol>
+  </section>
+  <section class="container section">
+    <div class="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
+  </section>
+</BaseLayout>
