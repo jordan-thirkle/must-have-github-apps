@@ -2,14 +2,17 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { jobs, tools } from '@/data/agent-prompt-catalog';
 
+const toolAliases: Record<string, string> = { 'github-secret-scanning': 'secret-scanning' };
 const presetTools = (Astro.url.searchParams.get('tools') || '')
   .split(',')
+  .map((id) => toolAliases[id] || id)
   .filter((id) => tools.some((tool) => tool.id === id));
 ---
 
 <BaseLayout
   title="Copy a prompt for your coding agent | Must-Have GitHub Apps"
   description="Create a privacy-first prompt for a coding agent to review GitHub Apps and repository needs."
+  canonical={new URL('/agent-prompt/', Astro.site || Astro.url).href}
 >
   <section class="container page-intro prompt-intro">
     <p class="eyebrow">Privacy-first utility</p>
@@ -28,7 +31,7 @@ const presetTools = (Astro.url.searchParams.get('tools') || '')
           jobs.map((job) => (
             <label class="prompt-option">
               <>
-                <input type="radio" name="job" value={job.id} />
+                <input type="radio" name="job" value={job.id} checked={job.id === 'bug-fix'} />
                 <span>
                   <>
                     <strong>{job.label}</strong>

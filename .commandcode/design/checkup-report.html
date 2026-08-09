@@ -135,13 +135,13 @@
         <div class="space-y-5">
           <article class="border border-[#2a1d22] bg-[#110b0d] p-5">
             <div class="mono mb-2 text-xs text-[#f43f5e]">P1</div>
-            <h2 class="mb-2 text-lg font-semibold">Secondary categories are not filterable</h2>
+            <h2 class="mb-2 text-lg font-semibold">Secondary-category filtering is hardened</h2>
             <p class="mb-4 text-sm leading-6 text-[#a0a0a0]">
-              App cards publish only their first category to the client filter, so a valid tool can
-              disappear from a job filter.
+              App cards publish every category slug, and the client filter matches category
+              membership.
             </p>
             <div class="border-l border-[#fbbf24] pl-4 text-sm leading-6 text-[#fbbf24]">
-              FIX: Publish all category slugs and test membership.
+              FIX: Keep the category-membership regression test in the content suite.
             </div>
           </article>
           <article class="border border-[#2a2418] bg-[#110f09] p-5">

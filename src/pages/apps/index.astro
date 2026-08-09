@@ -156,5 +156,6 @@ const initialQuery = Astro.url.searchParams.get('q')?.trim() || '';
     document
       .querySelector<HTMLFormElement>('#filter-form')
       ?.addEventListener('submit', (event) => event.preventDefault());
+    apply();
   </script>
 </BaseLayout>

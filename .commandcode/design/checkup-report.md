@@ -21,10 +21,10 @@
 
 ## Priority findings
 
-1. **Secondary categories are invisible to the filter.** Cards expose only `categories[0]`, so valid tools disappear when someone filters by a secondary job. Store all category slugs and match membership.
-2. **Mobile form controls risk iOS zoom.** The filter controls are below 16px in the base CSS. Use a 1rem control size on narrow screens and keep touch targets at least 44px.
-3. **Screen-reader utility CSS still uses deprecated `clip`.** Replace it with `clip-path: inset(50%)` to keep the accessibility helper valid under modern linting.
-4. **The homepage category numbering is positional.** Use the content model's explicit order so future insertions do not silently renumber the interface.
+1. **Secondary-category filtering was hardened.** Cards now publish every category slug and filters match category membership.
+2. **Mobile controls use a full readable size.** Narrow-screen inputs and selects use 1rem text and retain 44px targets.
+3. **The screen-reader helper uses modern clipping.** The utility uses `clip-path: inset(50%)`.
+4. **Homepage category ordering is data-driven.** The content model's explicit order prevents silent renumbering.
 
 ## What is working
 

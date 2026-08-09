@@ -271,7 +271,7 @@ main {
 }
 .hero-proof {
   margin: 20px 0 0;
-  color: var(--fg-subtle);
+  color: var(--fg-muted);
   font-family: 'DM Mono', ui-monospace, monospace;
   font-size: 0.75rem;
 }
@@ -1148,5 +1148,19 @@ main {
   *::after {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+  .app-card:hover,
+  .app-card:active,
+  .button:active,
+  .reset-button:active,
+  .icon-button:active {
+    transform: none;
+  }
+  .app-card {
+    transition: none;
+  }
+  .app-card.motion-enter,
+  #app-count.motion-update {
+    animation: none;
   }
 }

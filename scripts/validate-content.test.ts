@@ -17,8 +17,13 @@ test('canonical app records have evidence and review metadata', async () => {
 
 test('app records preserve every category for directory filtering', async () => {
   const files = await readAppFiles();
-  for (const { frontmatter } of files) {
-    assert.ok(Array.isArray(frontmatter.categories));
-    assert.ok(frontmatter.categories.length > 0);
+  for (const { name, frontmatter } of files) {
+    const categories = frontmatter.categories;
+    assert.ok(Array.isArray(categories), `${name}: categories must be an array`);
+    assert.ok(categories.length > 0, `${name}: categories must not be empty`);
+    assert.ok(
+      categories.every((category) => typeof category === 'string' && category.trim().length > 0),
+      `${name}: categories must contain only non-blank strings`,
+    );
   }
 });
