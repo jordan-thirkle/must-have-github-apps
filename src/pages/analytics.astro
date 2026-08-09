@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+const shareUrl = import.meta.env.PUBLIC_UMAMI_SHARE_URL;
+---
+
+<BaseLayout
+  title="Analytics | Must-Have GitHub Apps"
+  description="Aggregate public website analytics for Must-Have GitHub Apps."
+  noindex
+>
+  <div class="container"><Breadcrumbs items={[{ label: 'Analytics' }]} /></div>
+  <section class="container page-intro">
+    <p class="eyebrow">Built in public</p>
+    <h1 class="display">What the site is reaching.</h1>
+    <p>
+      Aggregate website analytics only. No visitor logs, prompt text, repository context, or private
+      dashboard access.
+    </p>
+  </section>
+  <section class="container section analytics-surface">
+    {
+      shareUrl ? (
+        <>
+          <p class="analytics-status">
+            Live through Umami. The view may be delayed and low-volume data is intentionally
+            limited.
+          </p>
+          <a class="button" href={shareUrl} rel="noreferrer">
+            Open live analytics <span aria-hidden="true">↗</span>
+          </a>
+        </>
+      ) : (
+        <div class="empty-state">
+          <strong>Live analytics is not configured yet.</strong>
+          <span>
+            Add PUBLIC_UMAMI_SHARE_URL in the deployment environment to publish the aggregate view.
+          </span>
+          <a class="button secondary" href="/privacy/">
+            Read the privacy boundary
+          </a>
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

@@ -3,6 +3,8 @@ name: Deploy to Vercel
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '37 6 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -33,7 +35,7 @@ jobs:
       - name: Build site
         run: npm run build
       - name: Deploy with Vercel
-        uses: amondnet/vercel-action@v25 # v25
+        uses: amondnet/vercel-action@v42 # v42
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
