@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Breadcrumbs from '@/components/Breadcrumbs.astro';
 import JsonLd from '@/components/JsonLd.astro';
-import { entryTypeLabel, formatDate, formatStars } from '@/lib/directory';
+import { entryTypeLabel, formatDate, formatStars, reviewState } from '@/lib/directory';
 
 export async function getStaticPaths() {
   const apps = await getCollection('apps');
@@ -23,6 +23,7 @@ const appSlugs = new Set(
 const description = data.seoDescription || data.summary;
 const actionUrls = new Set([data.officialUrl, data.documentationUrl]);
 const evidenceSources = data.sources.filter((source) => !actionUrls.has(source.url));
+const review = reviewState(data.reviewedAt, data.nextReviewAt);
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -51,7 +52,10 @@ const schema = {
       <p class="summary">{data.summary}</p>
       <div class="detail-actions">
         <a class="button" href={data.officialUrl}>Official site <span aria-hidden="true">↗</span></a
-        ><a class="button secondary" href={data.documentationUrl}>Documentation</a>
+        ><a class="button secondary" href={data.documentationUrl}>Documentation</a><a
+          class="button secondary"
+          href={`/agent-prompt/?tools=${data.slug}`}>Copy agent prompt</a
+        >
         {
           data.githubRepository && (
             <a class="button secondary" href={data.githubRepository.url}>
@@ -88,8 +92,21 @@ const schema = {
             </div>
           )
         }
-        <div class="fact"><dt>Last checked</dt><dd>{formatDate(data.reviewedAt)}</dd></div>
-        <div class="fact"><dt>Next check</dt><dd>{formatDate(data.nextReviewAt)}</dd></div>
+        <div class="fact">
+          <dt>Review status</dt><dd>
+            {
+              review.overdue
+                ? 'Review due'
+                : data.reviewStatus === 'verified'
+                  ? 'Verified'
+                  : data.reviewStatus === 'candidate'
+                    ? 'Candidate'
+                    : 'Needs review'
+            }
+          </dd>
+        </div>
+        <div class="fact"><dt>Last reviewed</dt><dd>{formatDate(data.reviewedAt)}</dd></div>
+        <div class="fact"><dt>Next review</dt><dd>{formatDate(data.nextReviewAt)}</dd></div>
       </dl>
     </aside>
   </section>

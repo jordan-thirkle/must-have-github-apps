@@ -7,6 +7,7 @@ import { entryTypeLabel, getApps, getCategories } from '@/lib/directory';
 const apps = await getApps();
 const categories = await getCategories();
 const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
+const initialQuery = Astro.url.searchParams.get('q')?.trim() || '';
 ---
 
 <BaseLayout
@@ -21,51 +22,60 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     </p>
   </section>
   <section class="container section">
+    <div class="toolbar prompt-entry">
+      <span>Want an agent to review your repository?</span><a
+        class="text-link"
+        href="/agent-prompt/">Copy a prompt</a
+      >
+    </div>
     <form class="filter-panel" id="filter-form" aria-labelledby="filter-heading">
       <h2 id="filter-heading" class="sr-only">Filter the directory</h2>
       <div class="filter-search">
-        <label for="app-search">Search entries</label><div class="search-input">
+        <label for="app-search">Search the directory</label><div class="search-input">
           <Icon name="search" size={16} /><input
             id="app-search"
             type="search"
-            placeholder="Tool, job, or vendor"
+            placeholder="Search by tool, job, or vendor"
+            value={initialQuery}
             autocomplete="off"
           />
         </div>
       </div>
-      <label
-        >Problem to solve<select id="filter-category"
-          ><option value="">All jobs</option>{
-            categories.map((category) => (
-              <option value={category.data.slug}>{category.data.name}</option>
-            ))
-          }</select
-        ></label
-      >
-      <label
-        >Tool type<select id="filter-type"
-          ><option value="">All types</option>{
-            entryTypes.map((type) => <option value={type}>{entryTypeLabel(type)}</option>)
-          }</select
-        ></label
-      >
-      <label
-        >Setup effort<select id="filter-setup" aria-describedby="setup-help"
-          ><option value="">Any setup effort</option><option value="low">Low</option><option
-            value="medium">Medium</option
-          ><option value="high">High</option></select
-        ></label
-      >
-      <label
-        >Sort<select id="filter-sort"
-          ><option value="recommended">Recommended</option><option value="setup"
-            >Lowest setup effort</option
-          ><option value="name">Name</option></select
-        ></label
-      >
-      <button class="reset-button" id="filter-reset" type="button">Reset</button>
+      <div class="filter-options">
+        <label
+          >Problem to solve<select id="filter-category"
+            ><option value="">All jobs</option>{
+              categories.map((category) => (
+                <option value={category.data.slug}>{category.data.name}</option>
+              ))
+            }</select
+          ></label
+        >
+        <label
+          >Tool type<select id="filter-type"
+            ><option value="">All types</option>{
+              entryTypes.map((type) => <option value={type}>{entryTypeLabel(type)}</option>)
+            }</select
+          ></label
+        >
+        <label
+          >Setup effort<select id="filter-setup" aria-describedby="setup-help"
+            ><option value="">Any setup effort</option><option value="low">Low</option><option
+              value="medium">Medium</option
+            ><option value="high">High</option></select
+          ></label
+        >
+        <label
+          >Sort<select id="filter-sort"
+            ><option value="recommended">Recommended</option><option value="setup"
+              >Lowest setup effort</option
+            ><option value="name">Name</option></select
+          ></label
+        >
+        <button class="reset-button" id="filter-reset" type="button">Reset filters</button>
+      </div>
       <p id="setup-help" class="filter-help">
-        Low is easy to start. High needs more setup and ongoing work.
+        Setup effort estimates the work needed to start and maintain a tool.
       </p>
     </form>
     <div class="toolbar mono">
@@ -86,12 +96,14 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     const cards = [...document.querySelectorAll<HTMLElement>('[data-app-card]')];
     const count = document.querySelector<HTMLElement>('#app-count');
     const empty = document.querySelector<HTMLElement>('#app-empty');
+    const setupOrder = { low: 0, medium: 1, high: 2 };
     const reset = () => {
       if (search) search.value = '';
       controls.forEach((control) => {
         control.value = control.id === 'filter-sort' ? 'recommended' : '';
       });
       apply();
+      search?.focus();
     };
     const apply = () => {
       const query = search?.value.trim().toLowerCase() || '';
@@ -104,10 +116,15 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
       const visible = cards.filter((card) => {
         const matches =
           (!query || card.dataset.search?.toLowerCase().includes(query)) &&
-          (!category || card.dataset.category === category) &&
+          (!category || card.dataset.category?.split(' ').includes(category)) &&
           (!type || card.dataset.entryType === type) &&
           (!setup || card.dataset.setup === setup);
+        const wasHidden = card.hidden;
         card.hidden = !matches;
+        if (matches && wasHidden) {
+          card.classList.add('motion-enter');
+          requestAnimationFrame(() => card.classList.remove('motion-enter'));
+        }
         return matches;
       });
       [...cards]
@@ -117,11 +134,19 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
                 b.querySelector('h3')?.textContent || '',
               )
             : sort === 'setup'
-              ? (a.dataset.setup || '').localeCompare(b.dataset.setup || '')
+              ? (setupOrder[a.dataset.setup as keyof typeof setupOrder] ?? 99) -
+                (setupOrder[b.dataset.setup as keyof typeof setupOrder] ?? 99)
               : 0,
         )
         .forEach((card) => grid?.append(card));
-      if (count) count.textContent = `Showing ${visible.length} of ${cards.length} reviewed tools.`;
+      if (count) {
+        count.textContent =
+          visible.length === cards.length
+            ? `Showing all ${cards.length} reviewed tools.`
+            : `Showing ${visible.length} of ${cards.length} reviewed tools.`;
+        count.classList.remove('motion-update');
+        requestAnimationFrame(() => count.classList.add('motion-update'));
+      }
       if (empty) empty.hidden = visible.length > 0;
     };
     search?.addEventListener('input', apply);
@@ -131,5 +156,6 @@ const entryTypes = [...new Set(apps.map(({ data }) => data.entryType))];
     document
       .querySelector<HTMLFormElement>('#filter-form')
       ?.addEventListener('submit', (event) => event.preventDefault());
+    apply();
   </script>
 </BaseLayout>

@@ -13,10 +13,10 @@ export async function getStaticPaths() {
 }
 
 const { collection } = Astro.props;
-const apps = await getCollection(
-  'apps',
-  ({ data }) => data.status === 'active' && collection.apps.includes(data.slug),
-);
+const allApps = await getCollection('apps');
+const apps = collection.apps
+  .map((slug) => allApps.find(({ data }) => data.status === 'active' && data.slug === slug))
+  .filter((app): app is (typeof allApps)[number] => Boolean(app));
 ---
 
 <BaseLayout
@@ -43,6 +43,22 @@ const apps = await getCollection(
     </ol>
   </section>
   <section class="container section">
-    <div class="app-grid">{apps.map((app) => <AppCard app={app.data} />)}</div>
+    {
+      apps.length > 0 ? (
+        <div class="app-grid">
+          {apps.map((app) => (
+            <AppCard app={app.data} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <strong>This collection has no reviewed tools yet.</strong>
+          <span>Browse the directory while the collection is being built.</span>
+          <a class="button secondary" href="/apps/">
+            Browse all tools
+          </a>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>
