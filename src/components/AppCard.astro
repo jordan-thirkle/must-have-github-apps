@@ -12,7 +12,7 @@ const review = reviewState(app.reviewedAt, app.nextReviewAt);
   class="app-card"
   data-app-card
   data-search={`${app.name} ${app.vendor} ${app.summary} ${app.categories.join(' ')} ${app.tags.join(' ')}`}
-  data-category={app.categories[0]}
+  data-category={app.categories.join(' ')}
   data-entry-type={app.entryType}
   data-setup={app.setupLevel}
   data-pricing={app.pricingModel}
@@ -38,7 +38,7 @@ const review = reviewState(app.reviewedAt, app.nextReviewAt);
           <span aria-hidden="true">★</span> {formatStars(app.githubRepository.stars)} stars
         </span>
       ) : (
-        <span>Last checked {review.lastChecked}</span>
+        <span>Reviewed {review.lastChecked}</span>
       )
     }
   </div>
