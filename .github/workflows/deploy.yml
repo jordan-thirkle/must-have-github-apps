@@ -20,11 +20,11 @@ jobs:
     environment: production
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4 # v4
+        uses: actions/checkout@v7 # v4
         with:
           persist-credentials: false
       - name: Set up Node
-        uses: actions/setup-node@v4 # v4
+        uses: actions/setup-node@v7 # v4
         with:
           node-version-file: .nvmrc
           cache: npm
