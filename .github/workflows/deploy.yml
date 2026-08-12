@@ -1,10 +1,14 @@
 name: Deploy to Vercel
 
+# Production deployments are managed by Vercel Git integration.
+# GitHub Action deployment is disabled to reduce Actions usage and
+# avoid redundant Vercel deployments.
+# To re-enable: uncomment the triggers below.
 on:
-  push:
-    branches: [main]
-  schedule:
-    - cron: '37 6 * * 1'
+#  push:
+#    branches: [main]
+#  schedule:
+#    - cron: '37 6 * * 1'
   workflow_dispatch:
 
 permissions:
