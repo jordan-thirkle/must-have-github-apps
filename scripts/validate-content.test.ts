@@ -4,7 +4,7 @@ import { readAppFiles } from './content-utils';
 
 test('canonical app records have evidence and review metadata', async () => {
   const files = await readAppFiles();
-  assert.equal(files.length, 4);
+  assert.equal(files.length, 10);
   for (const { frontmatter } of files) {
     assert.ok(frontmatter.slug);
     assert.ok(frontmatter.officialUrl);
