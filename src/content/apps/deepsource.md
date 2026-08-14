@@ -68,7 +68,10 @@ alternatives:
 officialUrl: https://deepsource.com
 documentationUrl: https://docs.deepsource.io
 pricingUrl: https://deepsource.com/pricing
-githubRepository: https://github.com/deepsource
+githubRepository:
+  url: https://github.com/deepsourcelabs/deepsource
+  owner: deepsourcelabs
+  name: deepsource
 sources:
   - label: "DeepSource docs"
     url: https://docs.deepsource.io
@@ -109,6 +112,6 @@ Continuous code quality that runs static analysis and style checks on every pull
 **Pricing model:** freemium (free tier available)
 **Alternatives in this directory:** codacy, codeclimate, sonarqube
 
-**Review links:** https://docs.deepsource.io
+**Review links:** <https://docs.deepsource.io>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.

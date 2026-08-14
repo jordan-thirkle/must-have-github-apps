@@ -105,6 +105,6 @@ Code coverage reporting that uploads and aggregates test coverage from pull requ
 **Pricing model:** freemium (free tier available)
 **Alternatives in this directory:** coveralls, codacy, cobertura
 
-**Review links:** https://docs.codecov.com
+**Review links:** <https://docs.codecov.com>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.

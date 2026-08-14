@@ -67,7 +67,10 @@ alternatives:
 officialUrl: https://semgrep.dev
 documentationUrl: https://semgrep.com/docs
 pricingUrl: https://semgrep.com/pricing
-githubRepository: https://github.com/returntocorp
+githubRepository:
+  url: https://github.com/returntocorp/semgrep
+  owner: returntocorp
+  name: semgrep
 sources:
   - label: "Semgrep docs"
     url: https://semgrep.com/docs
@@ -108,6 +111,6 @@ Static analysis tool that finds security vulnerabilities and code style issues u
 **Pricing model:** freemium (free tier available)
 **Alternatives in this directory:** codeql, snyk-code, eslint
 
-**Review links:** https://semgrep.com/docs
+**Review links:** <https://semgrep.com/docs>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.

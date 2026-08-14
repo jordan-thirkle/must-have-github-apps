@@ -104,6 +104,6 @@ Infrastructure and application monitoring with distributed tracing, logs, and sy
 **Pricing model:** paid
 **Alternatives in this directory:** new-relic, sentry, cloudwatch
 
-**Review links:** https://docs.datadoghq.com
+**Review links:** <https://docs.datadoghq.com>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.
