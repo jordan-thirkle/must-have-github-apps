@@ -86,7 +86,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'DeepSource for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: 'Continuous code quality that runs static analysis and style checks on every pull request. Compare DeepSource pricing, permissions, setup effort, limitations, and alternatives for GitHub.
+seoDescription: "Static analysis and code quality checks on every pull request. Compare DeepSource pricing, setup, and alternatives."
 ---
 
 ## Why it belongs in a baseline

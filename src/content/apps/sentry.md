@@ -82,7 +82,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'Sentry for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: 'Error and performance monitoring that surfaces crashes and slow transactions from production code. Compare Sentry pricing, permissions, setup effort, limitations, and alternatives for GitHub.
+seoDescription: "Error and performance monitoring that surfaces crashes and slow transactions. Compare Sentry pricing and alternatives."
 ---
 
 ## Why it belongs in a baseline
