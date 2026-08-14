@@ -4,63 +4,63 @@ slug: deepsource
 vendor: DeepSource
 entryType: github_app
 status: active
-summary: "Continuous code quality that runs static analysis and style checks on every pull request."
-problem: "Code quality drifts silently across a large codebase. DeepSource enforces consistent standards in pull requests before code is merged."
+summary: 'Continuous code quality that runs static analysis and style checks on every pull request.'
+problem: 'Code quality drifts silently across a large codebase. DeepSource enforces consistent standards in pull requests before code is merged.'
 bestFor:
-  - "Teams with multiple contributors and strict style or security requirements"
-  - "Repositories using multiple languages needing unified analysis"
+  - 'Teams with multiple contributors and strict style or security requirements'
+  - 'Repositories using multiple languages needing unified analysis'
 notFor:
-  - "Small single-author projects with casual review standards"
-  - "Teams that prefer editor-only linting"
+  - 'Small single-author projects with casual review standards'
+  - 'Teams that prefer editor-only linting'
 categories:
   - code-review
   - ci-cd
 tags:
-  - "static-analysis"
-  - "code-quality"
-  - "linting"
-  - "tech-debt"
+  - 'static-analysis'
+  - 'code-quality'
+  - 'linting'
+  - 'tech-debt'
 installationModels:
   - github_app
 githubSurfaces:
-  - "pull requests"
-  - "code scanning"
+  - 'pull requests'
+  - 'code scanning'
 capabilities:
-  - "static analysis"
-  - "code quality metrics"
-  - "technical debt tracking"
-  - "custom rules"
+  - 'static analysis'
+  - 'code quality metrics'
+  - 'technical debt tracking'
+  - 'custom rules'
 permissions:
   - resource: contents
     access: read
-    purpose: "Read source code and pull requests for analysis."
+    purpose: 'Read source code and pull requests for analysis.'
     scope: repository
   - resource: pull-requests
     access: write
-    purpose: "Post analysis results and annotations on pull requests."
+    purpose: 'Post analysis results and annotations on pull requests.'
     scope: repository
   - resource: metadata
     access: read
-    purpose: "Identify the repository and organization."
+    purpose: 'Identify the repository and organization.'
     scope: account
-accessSummary: "DeepSource reads source code and posts results on pull requests. It does not modify repository files."
+accessSummary: 'DeepSource reads source code and posts results on pull requests. It does not modify repository files.'
 dataAccess:
-  - "source code"
-  - "analysis results"
-  - "test coverage"
+  - 'source code'
+  - 'analysis results'
+  - 'test coverage'
 dataLeavesGitHub: yes
 setupLevel: medium
 maintenanceLevel: medium
 pricingModel: freemium
 freeTier: true
-pricingSummary: "Free tier for open-source projects. Paid plans start at $49/month for private repos."
-privacySummary: "Source code is sent to DeepSource for analysis. Review their privacy policy for retention details."
+pricingSummary: 'Free tier for open-source projects. Paid plans start at $49/month for private repos.'
+privacySummary: 'Source code is sent to DeepSource for analysis. Review their privacy policy for retention details.'
 strengths:
-  - "Excellent JavaScript/TypeScript and Python analysis"
-  - "Inline PR comments with autofix suggestions"
+  - 'Excellent JavaScript/TypeScript and Python analysis'
+  - 'Inline PR comments with autofix suggestions'
 limitations:
-  - "Limited support for some niche languages"
-  - "Free tier is restricted to open-source projects"
+  - 'Limited support for some niche languages'
+  - 'Free tier is restricted to open-source projects'
 alternatives:
   - codacy
   - codeclimate
@@ -73,15 +73,15 @@ githubRepository:
   owner: deepsourcelabs
   name: deepsource
 sources:
-  - label: "DeepSource docs"
+  - label: 'DeepSource docs'
     url: https://docs.deepsource.io
     type: documentation
     checkedAt: 2026-08-13
-  - label: "DeepSource pricing"
+  - label: 'DeepSource pricing'
     url: https://deepsource.com/pricing
     type: pricing
     checkedAt: 2026-08-13
-agentUseCase: "code-quality"
+agentUseCase: 'code-quality'
 monetized: true
 affiliateLink: https://deepsource.com/signup
 reviewedAt: 2026-08-13
@@ -89,7 +89,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'DeepSource for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: "Static analysis and code quality checks on every pull request. Compare DeepSource pricing, setup, and alternatives."
+seoDescription: 'Static analysis and code quality checks on every pull request. Compare DeepSource pricing, setup, and alternatives.'
 ---
 
 ## Why it belongs in a baseline
