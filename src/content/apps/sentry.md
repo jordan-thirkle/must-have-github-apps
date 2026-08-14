@@ -64,7 +64,10 @@ alternatives:
 officialUrl: https://sentry.io
 documentationUrl: https://docs.sentry.io
 pricingUrl: https://sentry.io/pricing/
-githubRepository: https://github.com/getsentry/sentry
+githubRepository:
+  url: https://github.com/getsentry/sentry
+  owner: getsentry
+  name: sentry
 sources:
   - label: "Sentry documentation"
     url: https://docs.sentry.io
@@ -104,6 +107,6 @@ Error and performance monitoring that surfaces crashes and slow transactions fro
 **Pricing model:** freemium (free tier available)
 **Alternatives in this directory:** glitchtip, rollbar, prometheus
 
-**Review links:** https://docs.sentry.io
+**Review links:** <https://docs.sentry.io>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.

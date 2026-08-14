@@ -108,6 +108,6 @@ Continuous integration and delivery platform that runs tests and deploys code on
 **Pricing model:** freemium (free tier available)
 **Alternatives in this directory:** github-actions, buildkite, gitlab-ci
 
-**Review links:** https://circleci.com/docs
+**Review links:** <https://circleci.com/docs>
 
 **Recommendation:** Check the links above and decide whether this tool addresses a problem your project actually has. If yes, note the required permissions and pricing model for a final check.
