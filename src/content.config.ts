@@ -95,6 +95,8 @@ const apps = defineCollection({
     reviewStatus: z.enum(['verified', 'needs-review', 'candidate']),
     volatility: z.enum(['high', 'medium', 'low']),
     featured: z.boolean().default(false),
+    monetized: z.boolean().default(false),
+    affiliateLink: z.url().optional(),
     seoTitle: z.string().optional(),
     seoDescription: z.string().min(80).max(170).optional(),
     sources: z.array(sourceSchema).min(2),
