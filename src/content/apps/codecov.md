@@ -82,7 +82,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'Codecov for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: 'Code coverage reporting that uploads and aggregates test coverage from pull requests and CI. Compare Codecov pricing, permissions, setup effort, limitations, and alternatives for GitHub.
+seoDescription: "Code coverage reporting that aggregates test coverage from pull requests. Compare Codecov pricing, setup, and alternatives."
 ---
 
 ## Why it belongs in a baseline

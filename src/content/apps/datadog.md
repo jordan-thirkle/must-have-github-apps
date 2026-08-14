@@ -82,7 +82,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'Datadog for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: 'Infrastructure and application monitoring with distributed tracing, logs, and synthetic checks. Compare Datadog pricing, permissions, setup effort, limitations, and alternatives for GitHub.
+seoDescription: "Infrastructure and APM monitoring with distributed tracing. Compare Datadog pricing, permissions, setup, and alternatives."
 ---
 
 ## Why it belongs in a baseline

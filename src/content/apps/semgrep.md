@@ -85,7 +85,7 @@ nextReviewAt: 2026-11-11
 reviewStatus: verified
 volatility: medium
 seoTitle: 'Semgrep for GitHub: Setup, Permissions, and Alternatives'
-seoDescription: 'Static analysis tool that finds security vulnerabilities and code style issues using pattern-based rules. Compare Semgrep pricing, permissions, setup effort, limitations, and alternatives for GitHub.
+seoDescription: "Static analysis tool finding security vulnerabilities with pattern-based rules. Compare Semgrep pricing and alternatives."
 ---
 
 ## Why it belongs in a baseline
