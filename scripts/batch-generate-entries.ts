@@ -30,7 +30,8 @@ interface AppDefinition {
   name: string;
   slug: string;
   vendor: string;
-  entryType: 'github_app' | 'marketplace_app' | 'action' | 'integration' | 'native_feature' | 'platform';
+  entryType:
+    'github_app' | 'marketplace_app' | 'action' | 'integration' | 'native_feature' | 'platform';
   summary: string;
   problem: string;
   bestFor: string[];
@@ -73,7 +74,7 @@ interface AppDefinition {
   affiliateLink?: string;
 }
 
-const TODAY = new Date().toISOString().split('T')[0];
+const TODAY = new Date();
 
 const APPS: AppDefinition[] = [
   {
@@ -97,7 +98,12 @@ const APPS: AppDefinition[] = [
     tags: ['error-monitoring', 'apm', 'performance', 'release-monitoring'],
     installationModels: ['github_app'],
     githubSurfaces: ['pull requests', 'commits'],
-    capabilities: ['error tracking', 'performance monitoring', 'release correlation', 'session replay'],
+    capabilities: [
+      'error tracking',
+      'performance monitoring',
+      'release correlation',
+      'session replay',
+    ],
     permissions: [
       {
         resource: 'contents',
@@ -123,7 +129,7 @@ const APPS: AppDefinition[] = [
     pricingSummary:
       'Free tier includes 5k errors and 1k traces per month. Paid plans start at $26/month for teams.',
     privacySummary:
-      'Error events and performance traces are sent to Sentry Inc. Review Sentry\'s privacy policy for data retention details.',
+      "Error events and performance traces are sent to Sentry Inc. Review Sentry's privacy policy for data retention details.",
     strengths: [
       'Excellent release and deploy correlation',
       'Strong ecosystem across 30+ languages',
@@ -138,8 +144,18 @@ const APPS: AppDefinition[] = [
     pricingUrl: 'https://sentry.io/pricing/',
     githubRepository: 'https://github.com/getsentry/sentry',
     sources: [
-      { label: 'Sentry documentation', url: 'https://docs.sentry.io', type: 'documentation', checkedAt: TODAY },
-      { label: 'Sentry pricing', url: 'https://sentry.io/pricing/', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'Sentry documentation',
+        url: 'https://docs.sentry.io',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'Sentry pricing',
+        url: 'https://sentry.io/pricing/',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'error-monitoring',
     monetized: true,
@@ -166,7 +182,12 @@ const APPS: AppDefinition[] = [
     tags: ['static-analysis', 'code-quality', 'linting', 'tech-debt'],
     installationModels: ['github_app'],
     githubSurfaces: ['pull requests', 'code scanning'],
-    capabilities: ['static analysis', 'code quality metrics', 'technical debt tracking', 'custom rules'],
+    capabilities: [
+      'static analysis',
+      'code quality metrics',
+      'technical debt tracking',
+      'custom rules',
+    ],
     permissions: [
       {
         resource: 'contents',
@@ -213,8 +234,18 @@ const APPS: AppDefinition[] = [
     pricingUrl: 'https://deepsource.com/pricing',
     githubRepository: 'https://github.com/deepsource',
     sources: [
-      { label: 'DeepSource docs', url: 'https://docs.deepsource.io', type: 'documentation', checkedAt: TODAY },
-      { label: 'DeepSource pricing', url: 'https://deepsource.com/pricing', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'DeepSource docs',
+        url: 'https://docs.deepsource.io',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'DeepSource pricing',
+        url: 'https://deepsource.com/pricing',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'code-quality',
     monetized: true,
@@ -233,10 +264,7 @@ const APPS: AppDefinition[] = [
       'Projects with CI pipelines that run tests',
       'Teams enforcing coverage gates before merge',
     ],
-    notFor: [
-      'Projects without automated tests',
-      'Teams that do not act on coverage reports',
-    ],
+    notFor: ['Projects without automated tests', 'Teams that do not act on coverage reports'],
     categories: ['ci-cd', 'code-review'],
     tags: ['code-coverage', 'testing', 'ci-integration'],
     installationModels: ['github_app'],
@@ -274,10 +302,7 @@ const APPS: AppDefinition[] = [
       'Free tier for public repos. Private repos require a paid plan starting at $10/repo/month.',
     privacySummary:
       'Coverage reports and test metadata are processed by Codecov. Review their privacy policy for data handling.',
-    strengths: [
-      'Wide CI provider support',
-      'Clear diff coverage visualization',
-    ],
+    strengths: ['Wide CI provider support', 'Clear diff coverage visualization'],
     limitations: [
       'Coverage reports are an external dependency',
       'Free tier does not support private repos',
@@ -287,8 +312,18 @@ const APPS: AppDefinition[] = [
     documentationUrl: 'https://docs.codecov.com',
     pricingUrl: 'https://about.codecov.io/pricing/',
     sources: [
-      { label: 'Codecov docs', url: 'https://docs.codecov.com', type: 'documentation', checkedAt: TODAY },
-      { label: 'Codecov pricing', url: 'https://about.codecov.io/pricing/', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'Codecov docs',
+        url: 'https://docs.codecov.com',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'Codecov pricing',
+        url: 'https://about.codecov.io/pricing/',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'testing',
     monetized: true,
@@ -348,10 +383,7 @@ const APPS: AppDefinition[] = [
       'Open-source CLI is free. Semgrep Cloud Platform paid plans start at $49/month for teams.',
     privacySummary:
       'Self-hosted on-prem deployment keeps all data within your infrastructure. Cloud plans process scans on Semgrep infra.',
-    strengths: [
-      'Excellent pattern-matching across 30+ languages',
-      'Can run locally or in CI',
-    ],
+    strengths: ['Excellent pattern-matching across 30+ languages', 'Can run locally or in CI'],
     limitations: [
       'Rule maintenance requires ongoing investment',
       'Cloud platform pricing scales with active developers',
@@ -362,8 +394,18 @@ const APPS: AppDefinition[] = [
     pricingUrl: 'https://semgrep.com/pricing',
     githubRepository: 'https://github.com/returntocorp',
     sources: [
-      { label: 'Semgrep docs', url: 'https://semgrep.com/docs', type: 'documentation', checkedAt: TODAY },
-      { label: 'Semgrep pricing', url: 'https://semgrep.com/pricing', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'Semgrep docs',
+        url: 'https://semgrep.com/docs',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'Semgrep pricing',
+        url: 'https://semgrep.com/pricing',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'static-analysis',
     monetized: true,
@@ -382,15 +424,17 @@ const APPS: AppDefinition[] = [
       'Teams running complex distributed systems',
       'Organizations needing infrastructure + application monitoring',
     ],
-    notFor: [
-      'Small projects with simple hosting',
-      'Teams that only need error tracking',
-    ],
+    notFor: ['Small projects with simple hosting', 'Teams that only need error tracking'],
     categories: ['observability', 'ci-cd'],
     tags: ['infrastructure-monitoring', 'apm', 'distributed-tracing', 'log-management'],
     installationModels: ['github_app'],
     githubSurfaces: ['pull requests', 'commits'],
-    capabilities: ['infrastructure metrics', 'distributed tracing', 'log management', 'synthetic monitoring'],
+    capabilities: [
+      'infrastructure metrics',
+      'distributed tracing',
+      'log management',
+      'synthetic monitoring',
+    ],
     permissions: [
       {
         resource: 'contents',
@@ -417,10 +461,7 @@ const APPS: AppDefinition[] = [
       'Paid service. Infrastructure monitoring starts at $15/host/month; APM starts at $43/container/month.',
     privacySummary:
       'Telemetry data is sent to Datadog. Review their privacy policy for data retention and processing details.',
-    strengths: [
-      'Comprehensive observability platform',
-      'Excellent integration ecosystem',
-    ],
+    strengths: ['Comprehensive observability platform', 'Excellent integration ecosystem'],
     limitations: [
       'Complex setup for distributed tracing',
       'Pricing scales quickly with infrastructure size',
@@ -430,8 +471,18 @@ const APPS: AppDefinition[] = [
     documentationUrl: 'https://docs.datadoghq.com',
     pricingUrl: 'https://www.datadoghq.com/pricing/',
     sources: [
-      { label: 'Datadog docs', url: 'https://docs.datadoghq.com', type: 'documentation', checkedAt: TODAY },
-      { label: 'Datadog pricing', url: 'https://www.datadoghq.com/pricing/', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'Datadog docs',
+        url: 'https://docs.datadoghq.com',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'Datadog pricing',
+        url: 'https://www.datadoghq.com/pricing/',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'observability',
     monetized: true,
@@ -487,23 +538,29 @@ const APPS: AppDefinition[] = [
     maintenanceLevel: 'medium',
     pricingModel: 'freemium',
     freeTier: true,
-    pricingSummary: 'Free tier includes 60 project minutes/month. Paid plans at $30/month for 30k credits.',
-    privacySummary: 'Build logs and test results are stored by CircleCI. Review their privacy policy.',
-    strengths: [
-      'Mature pipeline configuration with reusable orbs',
-      'Fast parallel test execution',
-    ],
-    limitations: [
-      'Config YAML can become complex at scale',
-      'Free tier credits are limited',
-    ],
+    pricingSummary:
+      'Free tier includes 60 project minutes/month. Paid plans at $30/month for 30k credits.',
+    privacySummary:
+      'Build logs and test results are stored by CircleCI. Review their privacy policy.',
+    strengths: ['Mature pipeline configuration with reusable orbs', 'Fast parallel test execution'],
+    limitations: ['Config YAML can become complex at scale', 'Free tier credits are limited'],
     alternatives: ['github-actions', 'buildkite', 'gitlab-ci'],
     officialUrl: 'https://circleci.com',
     documentationUrl: 'https://circleci.com/docs',
     pricingUrl: 'https://circleci.com/pricing/',
     sources: [
-      { label: 'CircleCI docs', url: 'https://circleci.com/docs', type: 'documentation', checkedAt: TODAY },
-      { label: 'CircleCI pricing', url: 'https://circleci.com/pricing/', type: 'pricing', checkedAt: TODAY },
+      {
+        label: 'CircleCI docs',
+        url: 'https://circleci.com/docs',
+        type: 'documentation',
+        checkedAt: TODAY,
+      },
+      {
+        label: 'CircleCI pricing',
+        url: 'https://circleci.com/pricing/',
+        type: 'pricing',
+        checkedAt: TODAY,
+      },
     ],
     agentUseCase: 'ci-cd',
     monetized: true,
@@ -598,7 +655,14 @@ const EntrySchema = z.object({
   name: z.string(),
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   vendor: z.string(),
-  entryType: z.enum(['github_app', 'marketplace_app', 'action', 'integration', 'native_feature', 'platform']),
+  entryType: z.enum([
+    'github_app',
+    'marketplace_app',
+    'action',
+    'integration',
+    'native_feature',
+    'platform',
+  ]),
   status: z.enum(['active', 'candidate', 'needs-review', 'deprecated', 'removed']),
   summary: z.string().min(40).max(180),
   problem: z.string().min(40),
@@ -652,7 +716,14 @@ const EntrySchema = z.object({
       z.object({
         label: z.string(),
         url: z.string(),
-        type: z.enum(['official', 'documentation', 'permissions', 'pricing', 'privacy', 'marketplace']),
+        type: z.enum([
+          'official',
+          'documentation',
+          'permissions',
+          'pricing',
+          'privacy',
+          'marketplace',
+        ]),
         checkedAt: z.coerce.date(),
       }),
     )
